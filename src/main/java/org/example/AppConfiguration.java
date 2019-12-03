@@ -8,18 +8,17 @@ import org.hibernate.validator.constraints.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
-public class DeOMgevingBackendConfiguration extends Configuration {
+public class AppConfiguration extends Configuration {
 
     @Valid
     @NotNull
+    @JsonProperty
     private DataSourceFactory database = new DataSourceFactory();
 
-    @JsonProperty("database")
     public void setDataSourceFactory(DataSourceFactory factory) {
         this.database = factory;
     }
 
-    @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
         return database;
     }
