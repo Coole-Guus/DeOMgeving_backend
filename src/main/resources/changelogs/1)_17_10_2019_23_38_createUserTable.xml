@@ -20,13 +20,13 @@
             <column name="password" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="role" type="varchar(10)">
-                <constraints nullable="false" checkConstraint="role IN ('GEBRUIKER', 'MEDEWERKER', 'ADMIN')"/>
+            <column name="role" type="enum('GEBRUIKER', 'MEDEWERKER', 'ADMIN')" defaultValue="GEBRUIKER">
+                <constraints nullable="false"/>
             </column>
             <column name="create_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="true"/>
             </column>
-            <column name="token" type="varchar(32)">
+            <column name="api_token" type="varchar(32)">
                 <constraints nullable="true"/>
             </column>
         </createTable>

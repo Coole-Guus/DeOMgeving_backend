@@ -3,13 +3,13 @@ database:
   driverClass: com.mysql.cj.jdbc.Driver
 
   # the username
-  user: root
+  user: iipsen2
 
   # the password
-  password:
+  password: IIpsen2OMgeving
 
   # the JDBC URL
-  url: jdbc:mysql://localhost:3306/deOMgeving?createDatabaseIfNotExist=true
+  url: jdbc:mysql://145.131.5.100:3306/deOMgeving?createDatabaseIfNotExist=true
 
   # any properties specific to your JDBC driver:
   properties:

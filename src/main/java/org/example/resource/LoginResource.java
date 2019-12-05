@@ -1,8 +1,8 @@
 package org.example.resource;
 
 import org.example.model.LoginCredentials;
+import org.example.model.User;
 import org.example.service.LoginService;
-import org.example.service.UserService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -12,7 +12,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  * @author Ashna Wiar
@@ -32,8 +31,9 @@ public class LoginResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response onLogin(@NotNull @Valid LoginCredentials credentials) {
+    public User onLogin(@NotNull @Valid LoginCredentials credentials) {
         System.out.println("called" +  service);
-        return service.onLogin(credentials.getEmail(), credentials.getPassword());
+        return service.onLogin(credentials);
     }
+
 }

@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.model.LoginCredentials;
 import org.example.model.User;
 import org.example.persistence.UserDAO;
 
@@ -16,9 +17,9 @@ public class LoginService {
         System.out.println("called" + userDAO);
     }
 
-    public Response onLogin(String email, String password) {
-        User user = userDAO.findUserByLoginCredentials(email, password);
-
-        return Response.ok().entity(user).build();
+    public User onLogin(LoginCredentials credentials) {
+        User user = userDAO.findUserByLoginCredentials(credentials);
+        System.out.println(Response.ok().entity(user).build());
+        return user;
     }
 }
