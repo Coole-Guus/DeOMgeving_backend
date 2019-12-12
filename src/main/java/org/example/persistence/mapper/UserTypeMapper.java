@@ -14,6 +14,6 @@ public class UserTypeMapper implements ResultSetMapper<User> {
         return new User(rs.getLong("id"), rs.getString("email"),
                 rs.getString("password"), rs.getString("name"),
                 rs.getString("role"), rs.getTimestamp("create_date"),
-                rs.getString("token"));
+                rs.getString("password_reset_token"));
     }
 }

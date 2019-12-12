@@ -7,6 +7,7 @@ import org.example.service.RegisterService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.validation.Valid;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -27,7 +28,7 @@ public class RegisterResource {
         this.registerService = registerService;
     }
 
-    @PUT
+    @POST
     public Response registerUser(@Valid RegisterCredentials registerCredentials) {
         return this.registerService.create(registerCredentials);
     }
