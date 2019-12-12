@@ -26,4 +26,6 @@ public interface UserDAO {
     @SqlUpdate("UPDATE user SET password_reset_token = :token WHERE email = :email")
     public void setToken(@Bind("email") String email, @Bind("token") String token);
 
+    @SqlUpdate("UPDATE user SET password = :password WHERE token = :token")
+    public void updatePassword(@Bind("password") String password, @Bind("token") String token);
 }

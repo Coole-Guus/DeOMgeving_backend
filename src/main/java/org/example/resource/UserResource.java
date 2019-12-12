@@ -31,9 +31,10 @@ public class UserResource {
         return Response.ok().build();
     }
 
+
 //    @POST
 //    @Path("/reset/{token}/{newPassword}")
-//    public Response forgotPassword(@PathParam("email") String email) {
+//    public Response resetPassword(@PathParam("email") String email) {
 //        this.userService.forgotPassword(email);
 //        return Response.ok().build();
 //    }
