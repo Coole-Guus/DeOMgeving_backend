@@ -1,21 +1,15 @@
 package org.example.resource;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import org.example.service.RegisterService;
 import org.example.service.UserService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.ws.rs.*;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Date;
-import java.util.Properties;
 
 @Singleton
 @Path("user")
@@ -38,10 +32,10 @@ public class UserResource {
     }
 
 
-    @POST
-    @Path("/reset/{token}/{newPassword}")
-    public Response resetPassword(@PathParam("email") String email) {
-        this.userService.forgotPassword(email);
-        return Response.ok().build();
-    }
+//    @POST
+//    @Path("/reset/{token}/{newPassword}")
+//    public Response resetPassword(@PathParam("email") String email) {
+//        this.userService.forgotPassword(email);
+//        return Response.ok().build();
+//    }
 }
