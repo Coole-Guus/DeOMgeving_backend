@@ -11,12 +11,12 @@ public class ExperimentMapper  implements ResultSetMapper<Experiment> {
     @Override
     public Experiment map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
         Experiment mappedExperiment = new Experiment();
+        mappedExperiment.setExperimentId(resultSet.getInt("experiment_ID"));
         mappedExperiment.setExperiment_naam(resultSet.getString("experiment_naam"));
         mappedExperiment.setWijziging_datum(resultSet.getString("wijziging_datum"));
         mappedExperiment.setFase(resultSet.getString("fase"));
-        mappedExperiment.setColor(resultSet.getString("status_kleur"));
-        mappedExperiment.setExperiment_leider(resultSet.getString("experiment_leider"));
-        mappedExperiment.setExperimentId(resultSet.getInt("experiment_ID"));
+//        mappedExperiment.setColor(resultSet.getString("status_kleur"));
+        mappedExperiment.setExperiment_leider(resultSet.getString("experiment_leider_primair"));
         return mappedExperiment;
     }
 }

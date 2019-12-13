@@ -29,47 +29,42 @@ public class ExperimentResource {
     }
 
     @GET
-    @JsonView(View.Public.class)
-    public Collection<Experiment> retrieveAll() {
+    @Path("/")
+    public List<Experiment> retrieveAll() {
+        System.out.println("called");
         return service.getAll();
     }
 
     @GET
     @Path("/{id}")
-    @JsonView(View.Public.class)
     public Experiment retrieve(@PathParam("id") int id)
     {
         return service.find(id);
     }
 
-
-    @POST
+    @DELETE
     @Path("/delete/{id}")
-    @JsonView(View.Public.class)
     public void delete(@PathParam("id") int id)
     {
         service.delete(id);
     }
 
     @POST
-    @Path("/create")
-    @JsonView(View.Public.class)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/")
     public int insert(Experiment experiment)
     {
         return service.add(experiment);
     }
 
-    @POST
-    @Path("/update/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @PUT
+    @Path("/{id}")
     public void update(@PathParam("id") int id, Experiment experiment)
     {
         service.update(id, experiment);
     }
 
 
-
+    // TODO improve this.
     //--------------------Order BY--------------------
     @GET
     @Path("/lastID")
