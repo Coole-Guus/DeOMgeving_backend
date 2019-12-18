@@ -7,7 +7,9 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.example.persistence.ExperimentDAO;
 import org.example.persistence.UserDAO;
+import org.example.service.ExperimentService;
 import org.example.service.LoginService;
 import org.example.service.RegisterService;
 import org.example.service.UserService;
@@ -66,9 +68,12 @@ public class App extends Application<AppConfiguration> {
             @Override
             protected void configure() {
                 bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
+                bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
                 bind(LoginService.class).to(LoginService.class);
                 bind(RegisterService.class).to(RegisterService.class);
                 bind(UserService.class).to(UserService.class);
+                bind(ExperimentService.class).to(ExperimentService.class);
+
             }
         });
     }

@@ -11,17 +11,18 @@ import java.util.List;
 public class ExperimentService extends BaseService<Experiment> {
 
     private final ExperimentDAO dao;
-    private final DBI database;
 
     @Inject
-    public ExperimentService(DBI jdbi) {
-        this.database = jdbi;
-        dao = this.database.onDemand(ExperimentDAO.class);
+    public ExperimentService(ExperimentDAO dao) {
+        this.dao = dao;
 
     }
 
-    public Collection<Experiment> getAll() {
-        return dao.getAll();
+    public List<Experiment> getAll() {
+        System.out.println("getting");
+        List<Experiment> experimentList = dao.getAll();
+        System.out.println(experimentList.toString());
+        return experimentList;
     }
 
     public Experiment find(int id) {
