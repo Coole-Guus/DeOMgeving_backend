@@ -44,63 +44,82 @@ public class ExperimentService extends BaseService<Experiment> {
 
     //--------------------ORDER BY--------------------
 
-    public List<Experiment> orderNameAsc(){
-        return dao.orderNameAsc();
-    }
+    // OLD
+//    public List<Experiment> orderNameAsc(){
+//        return dao.orderNameAsc();
+//    }
+//
+//    public List<Experiment> orderNameDesc(){
+//        return dao.orderNameDesc();
+//    }
+//
+//    public List<Experiment> orderLiederAsc(){
+//        return dao.orderLeiderAsc();
+//    }
+//
+//    public List<Experiment> orderLiederDesc(){
+//        return dao.orderLeiderDesc();
+//    }
+//
+//    public List<Experiment> orderEditedAsc(){
+//        return dao.orderEditedAsc();
+//    }
+//
+//    public List<Experiment> orderEditedDesc(){
+//        return dao.orderEditedDesc();
+//    }
 
-    public List<Experiment> orderNameDesc(){
-        return dao.orderNameDesc();
-    }
-
-    public List<Experiment> orderLiederAsc(){
-        return dao.orderLeiderAsc();
-    }
-
-    public List<Experiment> orderLiederDesc(){
-        return dao.orderLeiderDesc();
-    }
-
-    public List<Experiment> orderEditedAsc(){
-        return dao.orderEditedAsc();
-    }
-
-    public List<Experiment> orderEditedDesc(){
-        return dao.orderEditedDesc();
+    public List<Experiment> orderBy(String attribute, String order) {
+        return dao.orderBy(attribute, order);
     }
 
     //--------------------FILTERS--------------------
 
-    public List<Experiment> filterIdee(){
-        return dao.filterIdee();
+    // OLD
+//    public List<Experiment> filterIdee(){
+//        return dao.filterIdee();
+//    }
+//
+//    public List<Experiment> filterLabIn(){
+//        return dao.filterLabIn();
+//    }
+//
+//    public List<Experiment> filterLabUit(){
+//        return dao.filterLabUit();
+//    }
+//
+//    public List<Experiment> filterGreen(){
+//        return dao.filterGreen();
+//    }
+//
+//    public List<Experiment> filterOrange(){
+//        return dao.filterOrange();
+//    }
+//
+//    public List<Experiment> filterRed(){
+//        return dao.filterRed();
+//    }
+
+    public List <Experiment> filter(String filter, String value) {
+        return dao.filter(filter, value);
     }
 
-    public List<Experiment> filterLabIn(){
-        return dao.filterLabIn();
+    //--------------------ARCHIVE--------------------
+
+    // OLD
+//    public List<Experiment> filterHoF(){
+//        return dao.filterHoF();
+//    }
+//
+//    public List<Experiment> filterGY(){
+//        return dao.filterGY();
+//    }
+
+    public List<Experiment> archive(String type) {
+        return dao.filterArchive(type);
     }
 
-    public List<Experiment> filterLabUit(){
-        return dao.filterLabUit();
-    }
-
-    public List<Experiment> filterGreen(){
-        return dao.filterGreen();
-    }
-
-    public List<Experiment> filterOrange(){
-        return dao.filterOrange();
-    }
-
-    public List<Experiment> filterRed(){
-        return dao.filterRed();
-    }
-
-    public List<Experiment> filterHoF(){
-        return dao.filterHoF();
-    }
-
-    public List<Experiment> filterGY(){
-        return dao.filterGY();
-    }
+    //--------------------SEARCH--------------------
 
     public List<Experiment> filterSearch(String searchString){
         searchString = "%" + searchString + "%";
