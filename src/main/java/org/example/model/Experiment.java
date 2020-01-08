@@ -29,7 +29,11 @@ public class Experiment implements Principal {
 
     @NotNull
     @Length(max=50)
-    private String experiment_leider;
+    private String experiment_leider_primair;
+
+    @NotNull
+    @Length(max=50)
+    private String experiment_leider_secundair;
 
     @Override
     @JsonIgnore
@@ -41,12 +45,20 @@ public class Experiment implements Principal {
         return color;
     }
 
-    public String getExperiment_leider() {
-        return experiment_leider;
+    public String getExperiment_leider_primair() {
+        return experiment_leider_primair;
     }
 
-    public void setExperiment_leider(String experiment_leider) {
-        this.experiment_leider = experiment_leider;
+    public void setExperiment_leider_primair(String experiment_leider_primair) {
+        this.experiment_leider_primair = experiment_leider_primair;
+    }
+
+    public String getExperiment_leider_secundair() {
+        return experiment_leider_secundair;
+    }
+
+    public void setExperiment_leider_secundair(String experiment_leider_secundair) {
+        this.experiment_leider_secundair = experiment_leider_secundair;
     }
 
     public String getFase() {
@@ -93,7 +105,7 @@ public class Experiment implements Principal {
                 "experiment_naam:" + experiment_naam + "\n" +
                 "wijziging_datum:" + wijziging_datum + "\n" +
                 "fase:" + fase + "\n" +
-                "experiment_leider:" + experiment_leider + "";
-
+                "color:" + color + "\n" +
+                "experiment_leider:" + experiment_leider_primair + "";
     }
 }
