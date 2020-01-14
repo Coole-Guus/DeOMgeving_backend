@@ -32,7 +32,7 @@ public interface UserDAO {
     public void updatePassword(@Bind("password") String password, @Bind("token") String token);
 
     @SqlUpdate("UPDATE user SET email = :email, name = :name, role = :role) WHERE id = :id")
-    public Response updateUser(@BindBean User user);
+    public int updateUser(@BindBean User user);
 
     @SqlQuery("SELECT id, name, email FROM user WHERE role = :role")
     @Mapper(UserTypeMapper.class)

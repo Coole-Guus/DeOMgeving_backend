@@ -27,6 +27,6 @@ public class UserService {
     }
 
     public Response updateUser(User user) {
-        return userDAO.updateUser(user);
+        return Response.ok().entity(userDAO.updateUser(user)).build();
     }
 }
