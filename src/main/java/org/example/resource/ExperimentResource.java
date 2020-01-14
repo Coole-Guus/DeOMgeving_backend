@@ -82,48 +82,6 @@ public class ExperimentResource {
 
     //--------------------FILTERS--------------------
 
-    // OLD
-//    @GET
-//    @Path("/filterIdee")
-//    @JsonView(View.Public.class)
-//    public List<Experiment> filterIdee(){
-//        return service.filterIdee();
-//    }
-//
-//    @GET
-//    @Path("/filterLabIn")
-//    @JsonView(View.Public.class)
-//    public List<Experiment> filterLabIn(){
-//        return service.filterLabIn();
-//    }
-//
-//    @GET
-//    @Path("/filterLabUit")
-//    @JsonView(View.Public.class)
-//    public List<Experiment> filterLabUit(){
-//        return service.filterLabUit();
-//    }
-//
-//    @GET
-//    @Path("/filterGreen")
-//    @JsonView(View.Public.class)
-//    public List<Experiment> filterGreen(){
-//        return service.filterGreen();
-//    }
-//
-//    @GET
-//    @Path("/filterOrange")
-//    @JsonView(View.Public.class)
-//    public List<Experiment> filterOrange(){
-//        return service.filterOrange();
-//    }
-//
-//    @GET
-//    @Path("/filterRed")
-//    @JsonView(View.Public.class)
-//    public List<Experiment> filterRed(){
-//        return service.filterRed();
-//    }
         @GET
     @Path("/filter/{filter}/{value}")
     @JsonView(View.Public.class)
@@ -136,23 +94,6 @@ public class ExperimentResource {
         }
 
     }
-
-    //--------------------ARCHIVE--------------------
-
-    // OLD
-//    @GET
-//    @Path("/filterHoF")
-//    @JsonView(View.Public.class)
-//    public List<Experiment> filterHoF(){
-//        return service.filterHoF();
-//    }
-//
-//    @GET
-//    @Path("/filterGY")
-//    @JsonView(View.Public.class)
-//    public List<Experiment> filterGY(){
-//        return service.filterGY();
-//    }
 
     //--------------------SEARCH--------------------
 
