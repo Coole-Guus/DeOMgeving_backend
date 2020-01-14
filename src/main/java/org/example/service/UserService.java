@@ -1,9 +1,12 @@
 package org.example.service;
 
+import org.example.model.User;
 import org.example.persistence.UserDAO;
 import org.example.util.CryptographicUtils;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Response;
+import java.util.List;
 
 public class UserService {
 
@@ -17,5 +20,13 @@ public class UserService {
     public void forgotPassword(String email) {
         String password_reset_token = String.valueOf(CryptographicUtils.generateFourDigitNumber());
         userDAO.setToken(email, password_reset_token);
+    }
+
+    public List<User> getUsersByRole(String role) {
+        return userDAO.getUsersByRole(role);
+    }
+
+    public Response updateUser(User user) {
+        return userDAO.updateUser(user);
     }
 }
