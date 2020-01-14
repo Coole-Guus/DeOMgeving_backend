@@ -30,36 +30,38 @@ public class ExperimentResource {
 
     @GET
     @Path("/")
-    public List<Experiment> retrieveAll() {
+    public List<Experiment> retrieveAll(
+            @QueryParam("filter") int from,
+            @QueryParam("orderBy") String orderBy,
+            @QueryParam("direction") String direction,
+            @QueryParam("search") String search)
+
+    {
         System.out.println("called");
-        return service.getAll();
+        return service.getAll(from, orderBy, direction, search);
     }
 
     @GET
     @Path("/{id}")
-    public Experiment retrieve(@PathParam("id") int id)
-    {
+    public Experiment retrieve(@PathParam("id") int id) {
         return service.find(id);
     }
 
     @DELETE
     @Path("/delete/{id}")
-    public void delete(@PathParam("id") int id)
-    {
+    public void delete(@PathParam("id") int id) {
         service.delete(id);
     }
 
     @POST
     @Path("/")
-    public int insert(Experiment experiment)
-    {
+    public int insert(Experiment experiment) {
         return service.add(experiment);
     }
 
     @PUT
     @Path("/{id}")
-    public void update(@PathParam("id") int id, Experiment experiment)
-    {
+    public void update(@PathParam("id") int id, Experiment experiment) {
         service.update(id, experiment);
     }
 
@@ -69,49 +71,49 @@ public class ExperimentResource {
     @GET
     @Path("/lastID")
     @JsonView(View.Public.class)
-    public int lastID(){
+    public int lastID() {
         return service.getLastID();
     }
 
     @GET
     @Path("/orderNameAsc")
     @JsonView(View.Public.class)
-    public List<Experiment> orderNameAsc(){
+    public List<Experiment> orderNameAsc() {
         return service.orderNameAsc();
     }
 
     @GET
     @Path("/orderNameDesc")
     @JsonView(View.Public.class)
-    public List<Experiment> orderNameDesc(){
+    public List<Experiment> orderNameDesc() {
         return service.orderNameDesc();
     }
 
     @GET
     @Path("/orderLiederAsc")
     @JsonView(View.Public.class)
-    public List<Experiment> orderLiederAsc(){
+    public List<Experiment> orderLiederAsc() {
         return service.orderLiederAsc();
     }
 
     @GET
     @Path("/orderLiederDesc")
     @JsonView(View.Public.class)
-    public List<Experiment> orderLiederDesc(){
+    public List<Experiment> orderLiederDesc() {
         return service.orderLiederDesc();
     }
 
     @GET
     @Path("/orderEditedAsc")
     @JsonView(View.Public.class)
-    public List<Experiment> orderEditedAsc(){
+    public List<Experiment> orderEditedAsc() {
         return service.orderEditedAsc();
     }
 
     @GET
     @Path("/orderEditedDesc")
     @JsonView(View.Public.class)
-    public List<Experiment> orderEditedDesc(){
+    public List<Experiment> orderEditedDesc() {
         return service.orderEditedDesc();
     }
 
@@ -120,70 +122,65 @@ public class ExperimentResource {
     @GET
     @Path("/filterIdee")
     @JsonView(View.Public.class)
-    public List<Experiment> filterIdee(){
+    public List<Experiment> filterIdee() {
         return service.filterIdee();
     }
 
     @GET
     @Path("/filterLabIn")
     @JsonView(View.Public.class)
-    public List<Experiment> filterLabIn(){
+    public List<Experiment> filterLabIn() {
         return service.filterLabIn();
     }
 
     @GET
     @Path("/filterLabUit")
     @JsonView(View.Public.class)
-    public List<Experiment> filterLabUit(){
+    public List<Experiment> filterLabUit() {
         return service.filterLabUit();
     }
 
     @GET
     @Path("/filterGreen")
     @JsonView(View.Public.class)
-    public List<Experiment> filterGreen(){
+    public List<Experiment> filterGreen() {
         return service.filterGreen();
     }
 
     @GET
     @Path("/filterOrange")
     @JsonView(View.Public.class)
-    public List<Experiment> filterOrange(){
+    public List<Experiment> filterOrange() {
         return service.filterOrange();
     }
 
     @GET
     @Path("/filterRed")
     @JsonView(View.Public.class)
-    public List<Experiment> filterRed(){
+    public List<Experiment> filterRed() {
         return service.filterRed();
     }
 
     @GET
     @Path("/filterHoF")
     @JsonView(View.Public.class)
-    public List<Experiment> filterHoF(){
+    public List<Experiment> filterHoF() {
         return service.filterHoF();
     }
 
     @GET
     @Path("/filterGY")
     @JsonView(View.Public.class)
-    public List<Experiment> filterGY(){
+    public List<Experiment> filterGY() {
         return service.filterGY();
     }
 
     @GET
     @Path("/filterSearch/{searchString}")
     @JsonView(View.Public.class)
-    public List<Experiment> filterSearch(@PathParam("searchString") String searchString){
+    public List<Experiment> filterSearch(@PathParam("searchString") String searchString) {
         return service.filterSearch(searchString);
     }
-
-
-
-
-
 
 
 }

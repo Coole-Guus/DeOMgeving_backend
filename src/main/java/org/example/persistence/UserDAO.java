@@ -28,4 +28,7 @@ public interface UserDAO {
 
     @SqlUpdate("UPDATE user SET password = :password WHERE token = :token")
     public void updatePassword(@Bind("password") String password, @Bind("token") String token);
+
+    @SqlUpdate("DELETE FROM user WHERE id = :id")
+    public int removeUser(@Bind("id") int id);
 }

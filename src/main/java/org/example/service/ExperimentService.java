@@ -18,7 +18,7 @@ public class ExperimentService extends BaseService<Experiment> {
 
     }
 
-    public List<Experiment> getAll() {
+    public List<Experiment> getAll(int from, String by, String orderBy, String search) {
         System.out.println("getting");
         List<Experiment> experimentList = dao.getAll();
         System.out.println(experimentList.toString());
