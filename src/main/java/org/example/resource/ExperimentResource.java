@@ -64,8 +64,6 @@ public class ExperimentResource {
     }
 
 
-    // TODO improve this.
-    //--------------------Order BY--------------------
     @GET
     @Path("/lastID")
     @JsonView(View.Public.class)
@@ -73,105 +71,31 @@ public class ExperimentResource {
         return service.getLastID();
     }
 
-    @GET
-    @Path("/orderNameAsc")
-    @JsonView(View.Public.class)
-    public List<Experiment> orderNameAsc(){
-        return service.orderNameAsc();
-    }
+    //--------------------Order BY--------------------
 
     @GET
-    @Path("/orderNameDesc")
-    @JsonView(View.Public.class)
-    public List<Experiment> orderNameDesc(){
-        return service.orderNameDesc();
-    }
-
-    @GET
-    @Path("/orderLiederAsc")
-    @JsonView(View.Public.class)
-    public List<Experiment> orderLiederAsc(){
-        return service.orderLiederAsc();
-    }
-
-    @GET
-    @Path("/orderLiederDesc")
-    @JsonView(View.Public.class)
-    public List<Experiment> orderLiederDesc(){
-        return service.orderLiederDesc();
-    }
-
-    @GET
-    @Path("/orderEditedAsc")
-    @JsonView(View.Public.class)
-    public List<Experiment> orderEditedAsc(){
-        return service.orderEditedAsc();
-    }
-
-    @GET
-    @Path("/orderEditedDesc")
-    @JsonView(View.Public.class)
-    public List<Experiment> orderEditedDesc(){
-        return service.orderEditedDesc();
+    @Path("/orderBy/{attribute}/{order}")
+    @JsonView({View.Public.class})
+    public List <Experiment> orderBy(@PathParam("attribute") String attribute, @PathParam("order") String order){
+        return service.orderBy(attribute, order);
     }
 
     //--------------------FILTERS--------------------
 
-    @GET
-    @Path("/filterIdee")
+        @GET
+    @Path("/filter/{filter}/{value}")
     @JsonView(View.Public.class)
-    public List<Experiment> filterIdee(){
-        return service.filterIdee();
+    public List<Experiment> filterIdee(@PathParam("filter") String filter, @PathParam("value") String value){
+        if (!filter.equals("archive")) {
+            return service.filter(filter, value);
+        }
+        else {
+            return service.archive(value);
+        }
+
     }
 
-    @GET
-    @Path("/filterLabIn")
-    @JsonView(View.Public.class)
-    public List<Experiment> filterLabIn(){
-        return service.filterLabIn();
-    }
-
-    @GET
-    @Path("/filterLabUit")
-    @JsonView(View.Public.class)
-    public List<Experiment> filterLabUit(){
-        return service.filterLabUit();
-    }
-
-    @GET
-    @Path("/filterGreen")
-    @JsonView(View.Public.class)
-    public List<Experiment> filterGreen(){
-        return service.filterGreen();
-    }
-
-    @GET
-    @Path("/filterOrange")
-    @JsonView(View.Public.class)
-    public List<Experiment> filterOrange(){
-        return service.filterOrange();
-    }
-
-    @GET
-    @Path("/filterRed")
-    @JsonView(View.Public.class)
-    public List<Experiment> filterRed(){
-        return service.filterRed();
-    }
-
-    @GET
-    @Path("/filterHoF")
-    @JsonView(View.Public.class)
-    public List<Experiment> filterHoF(){
-        return service.filterHoF();
-    }
-
-    @GET
-    @Path("/filterGY")
-    @JsonView(View.Public.class)
-    public List<Experiment> filterGY(){
-        return service.filterGY();
-    }
+    //--------------------SEARCH--------------------
 
     @GET
     @Path("/filterSearch/{searchString}")
