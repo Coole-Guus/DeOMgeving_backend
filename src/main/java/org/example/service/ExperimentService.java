@@ -1,5 +1,6 @@
 package org.example.service;
 
+import com.sun.deploy.net.HttpResponse;
 import org.example.model.Experiment;
 import org.example.persistence.ExperimentDAO;
 import org.skife.jdbi.v2.DBI;
@@ -42,31 +43,22 @@ public class ExperimentService extends BaseService<Experiment> {
         dao.delete(id);
     }
 
-    //--------------------ORDER BY--------------------
-
-    public List<Experiment> orderBy(String attribute, String order) {
-        return dao.orderBy(attribute, order);
+    public List<Experiment> selectBy(String operation, String attribute, String value) {
+        switch (operation){
+            case "order":
+                return dao.orderBy(attribute, value);
+            case "filter":
+                if(attribute.equals("archive")) {
+                    return dao.filterArchive(value);
+                }
+                return dao.filter(attribute, value);
+            case "search":
+                return dao.filterSearch(attribute);
+            default:
+                return null;
+        }
     }
 
-    //--------------------FILTERS--------------------
-
-    public List <Experiment> filter(String filter, String value) {
-        return dao.filter(filter, value);
-    }
-
-    //--------------------ARCHIVE--------------------
-
-    public List<Experiment> archive(String type) {
-        return dao.filterArchive(type);
-    }
-
-    //--------------------SEARCH--------------------
-
-    public List<Experiment> filterSearch(String searchString){
-        searchString = "%" + searchString + "%";
-        return dao.filterSearch(searchString);
-
-    }
     public int getLastID(){
         return dao.getLastID();
     }
