@@ -47,7 +47,7 @@ public class LoginService {
         return JWT.create()
                 .withIssuer("De_omgeving")
                 .withIssuedAt(new Date())
-                .withClaim("username", user.getName())
+                .withClaim("name", user.getName())
                 .withClaim("role", user.getRole())
                 .withExpiresAt(expireDate)
                 .sign(algorithm);
