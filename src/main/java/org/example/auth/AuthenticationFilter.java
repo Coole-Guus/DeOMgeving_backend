@@ -4,9 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import org.example.service.LoginService;
-import org.example.service.UserService;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -24,16 +22,15 @@ import java.util.logging.Logger;
 public class AuthenticationFilter implements ContainerRequestFilter {
 
     public static final String AUTHENTICATION_SCHEME = "Bearer ";
-    Logger logger = Logger.getLogger(AuthenticationFilter.class.getSimpleName());
 
     Algorithm algorithm = Algorithm.HMAC256(LoginService.HS256_SECRET);
     JWTVerifier verifier = JWT.require(algorithm).withIssuer("De_omgeving").build();
 
     @Override
-    public void filter(ContainerRequestContext context) throws IOException {
+    public void filter(ContainerRequestContext context) {
 
         if (isPreflightRequest(context)) {
-            context.abortWith(Response.ok().entity("Im save >;").build());
+            abortSuccess(context);
             return;
         }
         String authorizationHeader = context.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -44,13 +41,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
 
         String jwtToken = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
-        System.out.println("\n\n\n\n\njwt " + jwtToken + "\n\n\n\n");
 
         try {
             verifier.verify(jwtToken);
-            System.out.println("success");
         } catch (JWTVerificationException exception) {
-            exception.printStackTrace();
             abortUnauthorized(context);
         }
 
