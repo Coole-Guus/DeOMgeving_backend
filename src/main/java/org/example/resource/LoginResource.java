@@ -28,13 +28,12 @@ public class LoginResource {
     @Inject
     public LoginResource(LoginService service) {
         this.service = service;
-        System.out.println("called 2");
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response onLogin(@NotNull @Valid LoginCredentials credentials) {
-        return Response.ok(service.onLogin(credentials)).build();
+        return service.onLogin(credentials);
     }
 
 }
