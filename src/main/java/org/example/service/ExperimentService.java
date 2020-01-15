@@ -20,9 +20,7 @@ public class ExperimentService extends BaseService<Experiment> {
     }
 
     public List<Experiment> getAll() {
-        System.out.println("getting");
         List<Experiment> experimentList = dao.getAll();
-        System.out.println(experimentList.toString());
         return experimentList;
     }
 

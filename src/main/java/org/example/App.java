@@ -7,6 +7,7 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.example.auth.AuthenticationFilter;
 import org.example.persistence.ExperimentDAO;
 import org.example.persistence.UserDAO;
 import org.example.service.ExperimentService;
@@ -56,6 +57,7 @@ public class App extends Application<AppConfiguration> {
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         registerInjections(config, env);
         env.jersey().packages("org.example.resource");
+        env.jersey().register(AuthenticationFilter.class);
     }
 
     private void registerInjections(AppConfiguration config, Environment env) {
