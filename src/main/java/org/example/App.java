@@ -41,7 +41,6 @@ public class App extends Application<AppConfiguration> {
                 return configuration.getDataSourceFactory();
             }
         });
-
     }
 
     @Override
@@ -52,7 +51,7 @@ public class App extends Application<AppConfiguration> {
         // Configure CORS parameters
         cors.setInitParameter("allowedOrigins", "*");
         cors.setInitParameter("allowedHeaders", "*");
-        cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+        cors.setInitParameter("allowedMethods", "*");
 
         // Add URL mapping
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");

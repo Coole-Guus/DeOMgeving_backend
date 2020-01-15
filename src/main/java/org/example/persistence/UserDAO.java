@@ -4,13 +4,15 @@ import org.example.model.LoginCredentials;
 import org.example.model.RegisterCredentials;
 import org.example.model.User;
 import org.example.persistence.mapper.UserTypeMapper;
-import org.example.resource.RegisterResource;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
+
+import javax.ws.rs.core.Response;
+import java.util.List;
 
 @RegisterMapper(UserTypeMapper.class)
 public interface UserDAO {
@@ -28,4 +30,12 @@ public interface UserDAO {
 
     @SqlUpdate("UPDATE user SET password = :password WHERE token = :token")
     public void updatePassword(@Bind("password") String password, @Bind("token") String token);
+
+    @SqlUpdate("UPDATE user SET email = :email, name = :name, role = :role) WHERE id = :id")
+    public int updateUser(@BindBean User user);
+
+    @SqlQuery("SELECT id, name, email FROM user WHERE role = :role")
+    @Mapper(UserTypeMapper.class)
+    public List<User> getUsersByRole(@Bind("role") String role);
+
 }

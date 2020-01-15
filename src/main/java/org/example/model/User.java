@@ -36,6 +36,8 @@ public class User {
     @Length(min = 32, max = 32)
     private String token;
 
+    public User(){ }
+
     public User(long id, String email, String password, String name, String role, Timestamp createDate, String token) {
         this.id = id;
         this.email = email;
