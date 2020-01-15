@@ -1,24 +1,33 @@
 package org.example.service;
 
+import org.example.model.User;
 import org.example.persistence.UserDAO;
 import org.example.util.CryptographicUtils;
-import ru.vyarus.dropwizard.guice.module.context.stat.Stat;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 public class UserService {
 
     private final UserDAO userDAO;
 
     @Inject
-    public UserService(UserDAO userDAO) {
+    public UserService(UserDAO userDAO){
         this.userDAO = userDAO;
     }
 
     public void forgotPassword(String email) {
         String password_reset_token = String.valueOf(CryptographicUtils.generateFourDigitNumber());
         userDAO.setToken(email, password_reset_token);
+    }
+
+    public List<User> getUsersByRole(String role) {
+        return userDAO.getUsersByRole(role);
+    }
+
+    public Response updateUser(User user) {
+        return Response.ok().entity(userDAO.updateUser(user)).build();
     }
 
     public Response delete(int id) {

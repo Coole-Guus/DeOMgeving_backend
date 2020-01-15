@@ -1,5 +1,6 @@
 package org.example.service;
 
+import com.sun.deploy.net.HttpResponse;
 import org.example.model.Experiment;
 import org.example.persistence.ExperimentDAO;
 import org.skife.jdbi.v2.DBI;
@@ -42,71 +43,22 @@ public class ExperimentService extends BaseService<Experiment> {
         dao.delete(id);
     }
 
-    //--------------------ORDER BY--------------------
-
-    public List<Experiment> orderNameAsc(){
-        return dao.orderNameAsc();
+    public List<Experiment> selectBy(String operation, String attribute, String value) {
+        switch (operation){
+            case "order":
+                return dao.orderBy(attribute, value);
+            case "filter":
+                if(attribute.equals("archive")) {
+                    return dao.filterArchive(value);
+                }
+                return dao.filter(attribute, value);
+            case "search":
+                return dao.filterSearch(attribute);
+            default:
+                return null;
+        }
     }
 
-    public List<Experiment> orderNameDesc(){
-        return dao.orderNameDesc();
-    }
-
-    public List<Experiment> orderLiederAsc(){
-        return dao.orderLeiderAsc();
-    }
-
-    public List<Experiment> orderLiederDesc(){
-        return dao.orderLeiderDesc();
-    }
-
-    public List<Experiment> orderEditedAsc(){
-        return dao.orderEditedAsc();
-    }
-
-    public List<Experiment> orderEditedDesc(){
-        return dao.orderEditedDesc();
-    }
-
-    //--------------------FILTERS--------------------
-
-    public List<Experiment> filterIdee(){
-        return dao.filterIdee();
-    }
-
-    public List<Experiment> filterLabIn(){
-        return dao.filterLabIn();
-    }
-
-    public List<Experiment> filterLabUit(){
-        return dao.filterLabUit();
-    }
-
-    public List<Experiment> filterGreen(){
-        return dao.filterGreen();
-    }
-
-    public List<Experiment> filterOrange(){
-        return dao.filterOrange();
-    }
-
-    public List<Experiment> filterRed(){
-        return dao.filterRed();
-    }
-
-    public List<Experiment> filterHoF(){
-        return dao.filterHoF();
-    }
-
-    public List<Experiment> filterGY(){
-        return dao.filterGY();
-    }
-
-    public List<Experiment> filterSearch(String searchString){
-        searchString = "%" + searchString + "%";
-        return dao.filterSearch(searchString);
-
-    }
     public int getLastID(){
         return dao.getLastID();
     }

@@ -1,5 +1,3 @@
-template: Hello, %s!
-defaultName: Nello
 
 database:
   # the name of your JDBC driver

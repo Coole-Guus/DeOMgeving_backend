@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
 /**
@@ -32,10 +33,8 @@ public class LoginResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public User onLogin(@NotNull @Valid LoginCredentials credentials) {
-        System.out.println("called"  +  service);
-        System.out.println("1" + credentials);
-        return service.onLogin(credentials);
+    public Response onLogin(@NotNull @Valid LoginCredentials credentials) {
+        return Response.ok(service.onLogin(credentials)).build();
     }
 
 }

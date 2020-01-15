@@ -40,7 +40,6 @@ public class App extends Application<AppConfiguration> {
                 return configuration.getDataSourceFactory();
             }
         });
-
     }
 
     @Override
