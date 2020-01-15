@@ -2,6 +2,7 @@ package org.example.resource;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.example.View;
+import org.example.auth.Secured;
 import org.example.model.Experiment;
 import org.example.model.ExperimentDetails;
 import org.example.service.ExperimentService;
@@ -19,6 +20,7 @@ import java.util.List;
 @Singleton
 @Path("/experimenten")
 @Produces(MediaType.APPLICATION_JSON)
+@Secured
 public class ExperimentResource {
 
     private final ExperimentService service;
@@ -31,7 +33,6 @@ public class ExperimentResource {
     @GET
     @Path("/")
     public List<Experiment> retrieveAll() {
-        System.out.println("called");
         return service.getAll();
     }
 
@@ -43,7 +44,7 @@ public class ExperimentResource {
     }
 
     @DELETE
-    @Path("/delete/{id}")
+    @Path("/{id}")
     public void delete(@PathParam("id") int id)
     {
         service.delete(id);
