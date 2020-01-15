@@ -63,7 +63,6 @@ public class ExperimentResource {
         service.update(id, experiment);
     }
 
-
     @GET
     @Path("/lastID")
     @JsonView(View.Public.class)
@@ -71,43 +70,21 @@ public class ExperimentResource {
         return service.getLastID();
     }
 
-    //--------------------Order BY--------------------
+    //--------------------FILTER, ORDER, SEARCH--------------------
 
     @GET
-    @Path("/orderBy/{attribute}/{order}")
-    @JsonView({View.Public.class})
-    public List <Experiment> orderBy(@PathParam("attribute") String attribute, @PathParam("order") String order){
-        return service.orderBy(attribute, order);
+    @Path("filter/{operation}/{attribute}/{value}")
+    public List<Experiment> getExperimentSelection(
+            @PathParam("operation") String operation,
+            @PathParam("attribute") String attribute,
+            @PathParam("value") String value) {
+        return service.selectBy(operation, attribute, value);
     }
-
-    //--------------------FILTERS--------------------
-
-        @GET
-    @Path("/filter/{filter}/{value}")
-    @JsonView(View.Public.class)
-    public List<Experiment> filterIdee(@PathParam("filter") String filter, @PathParam("value") String value){
-        if (!filter.equals("archive")) {
-            return service.filter(filter, value);
-        }
-        else {
-            return service.archive(value);
-        }
-
-    }
-
-    //--------------------SEARCH--------------------
 
     @GET
-    @Path("/filterSearch/{searchString}")
-    @JsonView(View.Public.class)
-    public List<Experiment> filterSearch(@PathParam("searchString") String searchString){
-        return service.filterSearch(searchString);
+    @Path("search/{term}")
+    public List<Experiment> getExperimentSearch(@PathParam("term") String term) {
+        return service.selectBy("search", term, "");
     }
-
-
-
-
-
-
 
 }
