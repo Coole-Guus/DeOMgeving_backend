@@ -37,6 +37,12 @@ public class UserResource {
         return userService.getUsersByRole(role);
     }
 
+    @GET
+    @Path("/getAllUsers")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
     @POST
     @Path("/updateUser")
     public Response updateUser(User user) {
