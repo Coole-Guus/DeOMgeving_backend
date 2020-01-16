@@ -4,6 +4,8 @@ import org.example.model.ExperimentDetails;
 import org.example.service.ExperimentDetailsService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -42,8 +44,10 @@ public class ExperimentDetailsResource {
 
     @PUT
     @Path("/{id}")
-    public void update(@PathParam("id") int id, ExperimentDetails experimentDetails)
+    public void update(@PathParam("id") int id, @Valid @NotNull ExperimentDetails experimentDetails)
     {
+        System.out.println("called");
+        experimentDetails.setExperimentId(id);
         service.update(id, experimentDetails);
     }
 }
