@@ -7,12 +7,12 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.example.auth.AuthenticationFilter;
+import org.example.model.ExperimentDetails;
 import org.example.persistence.ExperimentDAO;
+import org.example.persistence.ExperimentDetailsDAO;
 import org.example.persistence.UserDAO;
-import org.example.service.ExperimentService;
-import org.example.service.LoginService;
-import org.example.service.RegisterService;
-import org.example.service.UserService;
+import org.example.service.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.skife.jdbi.v2.DBI;
 
@@ -49,13 +49,14 @@ public class App extends Application<AppConfiguration> {
 
         // Configure CORS parameters
         cors.setInitParameter("allowedOrigins", "*");
-        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+        cors.setInitParameter("allowedHeaders", "*");
         cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
 
         // Add URL mapping
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         registerInjections(config, env);
         env.jersey().packages("org.example.resource");
+        env.jersey().register(AuthenticationFilter.class);
     }
 
     private void registerInjections(AppConfiguration config, Environment env) {
@@ -68,7 +69,9 @@ public class App extends Application<AppConfiguration> {
             protected void configure() {
                 bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
                 bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
+                bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
                 bind(LoginService.class).to(LoginService.class);
+                bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
                 bind(RegisterService.class).to(RegisterService.class);
                 bind(UserService.class).to(UserService.class);
                 bind(ExperimentService.class).to(ExperimentService.class);
