@@ -19,10 +19,9 @@ public interface ExperimentDetailsDAO {
     @Mapper(ExperimentDetailsMapper.class)
     public ExperimentDetails find(@Bind("id") int id);
 
-    @SqlUpdate("UPDATE experiment_details SET" +
+    @SqlUpdate("UPDATE experiment_details SET " +
             "netwerk = :netwerk," +
             "status = :status," +
-            "status_kleur = :status_kleur," +
             "kosten_inovatie = :kosten_inovatie," +
             "kosten_anders = :kosten_anders," +
             "doorlooptijd = :doorlooptijd," +
@@ -33,9 +32,9 @@ public interface ExperimentDetailsDAO {
     public void updateExperimentDetails(@Bind("id") int id, @BindBean ExperimentDetails experimentDetails);
 
     @SqlUpdate("INSERT INTO experiment_details " +
-            "(netwerk, status, status_kleur, kosten_inovatie, kosten_anders, doorlooptijd, beschrijving, voortgang, archief_type) " +
+            "(experiment_ID, netwerk, status, kosten_inovatie, kosten_anders, doorlooptijd, beschrijving, voortgang, archief_type) " +
             "VALUES " +
-            "(:netwerk, :status, :status_kleur, :kosten_inovatie, :kosten_anders, :doorlooptijd, :beschrijving, :voortgang, :archief_type) ")
+            "(:experimentId, :netwerk, :status, :kosten_inovatie, :kosten_anders, :doorlooptijd, :beschrijving, :voortgang, :archief_type) ")
     public int addExperimentDetails( @BindBean ExperimentDetails experimentDetails);
 
     @SqlUpdate("DELETE FROM experiment_details WHERE experiment_id = :id")
