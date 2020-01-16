@@ -13,9 +13,6 @@ public class ExperimentDetails {
     private String status;
 
     @NotNull
-    private String status_kleur;
-
-    @NotNull
     private String kosten_inovatie;
 
     @NotNull
@@ -55,14 +52,6 @@ public class ExperimentDetails {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getStatus_kleur() {
-        return status_kleur;
-    }
-
-    public void setStatus_kleur(String status_kleur) {
-        this.status_kleur = status_kleur;
     }
 
     public String getKosten_inovatie() {
