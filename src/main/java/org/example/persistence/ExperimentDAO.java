@@ -47,7 +47,7 @@ public interface ExperimentDAO {
     //--------------------SEARCH--------------------
 
     //Filter search bar
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur FROM experiment WHERE experiment_naam LIKE :searchString OR experiment_leider_primair LIKE :searchString OR experiment_leider_secundair LIKE :searchString;")
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur FROM experiment WHERE experiment_naam LIKE %:searchString% OR experiment_leider_primair LIKE %:searchString% OR experiment_leider_secundair LIKE %:searchString%;")
     @Mapper(ExperimentMapper.class)
     public List<Experiment> filterSearch(@Bind("searchString")String searchString);
 

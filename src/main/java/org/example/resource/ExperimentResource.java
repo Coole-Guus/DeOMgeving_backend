@@ -52,11 +52,11 @@ public class ExperimentResource {
 
     @POST
     @Path("/")
-    public Response insert(Experiment experiment) {
-        int id = service.add(experiment);
-        HashMap<String, Integer> responceEntity = new HashMap<>();
-        responceEntity.put("id", id);
-        return Response.ok().entity(responceEntity).build();
+    public int insert(Experiment experiment) {
+        return service.add(experiment);
+//        HashMap<String, Integer> responceEntity = new HashMap<>();
+//        responceEntity.put("id", id);
+//        return Response.ok().entity(responceEntity).build();
     }
 
     @PUT

@@ -22,6 +22,7 @@ public class ExperimentDetailsService  extends BaseService<ExperimentDetails> {
     }
 
     public void update(int id, ExperimentDetails experiment) {
+        System.out.println("updating");
         dao.updateExperimentDetails(id, experiment);
     }
 
