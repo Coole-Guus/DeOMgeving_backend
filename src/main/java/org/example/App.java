@@ -51,7 +51,7 @@ public class App extends Application<AppConfiguration> {
         cors.setInitParameter("allowedOrigins", "*");
         cors.setInitParameter("allowedHeaders", "*");
         cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
-        cors.setInitParameter("Access-Control-Allow-Origin", "*)");
+        cors.setInitParameter("Access-Control-Allow-Origin", "*");
 
         // Add URL mapping
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
