@@ -46,8 +46,6 @@ public class ExperimentDetailsResource {
     @Path("/{id}")
     public void update(@PathParam("id") int id, @Valid @NotNull ExperimentDetails experimentDetails)
     {
-        System.out.println("called");
-        experimentDetails.setExperimentId(id);
         service.update(id, experimentDetails);
     }
 }

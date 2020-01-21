@@ -27,7 +27,6 @@ public class ExperimentDetails {
     @NotNull
     private String voortgang;
 
-    @NotNull
     private String archief_type;
 
     public int getExperimentId() {
