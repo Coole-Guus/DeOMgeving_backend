@@ -44,7 +44,7 @@ public class LoginService {
 
     private String buildJWTToken(User user) {
         Algorithm algorithm = Algorithm.HMAC256(HS256_SECRET);
-        Date expireDate = createExpireDate(15);
+        Date expireDate = createExpireDate(60);
         return JWT.create()
                 .withIssuer("De_omgeving")
                 .withIssuedAt(new Date())
