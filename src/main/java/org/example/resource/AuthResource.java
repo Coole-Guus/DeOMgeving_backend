@@ -1,8 +1,8 @@
 package org.example.resource;
 
 import org.example.model.LoginCredentials;
-import org.example.model.User;
-import org.example.service.LoginService;
+import org.example.model.RegisterCredentials;
+import org.example.service.AuthService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -13,27 +13,28 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
 
-/**
- * @author Ashna Wiar
- */
 @Singleton
-@Path("login")
 @Produces(MediaType.APPLICATION_JSON)
-public class LoginResource {
+@Path("/")
+public class AuthResource {
 
-    private final LoginService service;
+    private AuthService service;
 
     @Inject
-    public LoginResource(LoginService service) {
+    public AuthResource(AuthService service) {
         this.service = service;
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path("login")
     public Response onLogin(@NotNull @Valid LoginCredentials credentials) {
         return service.onLogin(credentials);
     }
 
+    @POST
+    @Path("register")
+    public Response registerUser(@Valid RegisterCredentials registerCredentials) {
+        return this.service.create(registerCredentials);
+    }
 }
