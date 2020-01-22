@@ -54,9 +54,7 @@ public interface UserDAO {
     @Mapper(UserTypeMapper.class)
     public List<User> getUsersByRole(@Bind("role") String role);
 
-
-
-    @SqlQuery("SELECT id, name, email, role FROM user")
+    @SqlQuery("SELECT id, name, email, role FROM user ORDER BY role DESC")
     @Mapper(UserTypeMapper.class)
     public List<User> getAllUsers();
 
