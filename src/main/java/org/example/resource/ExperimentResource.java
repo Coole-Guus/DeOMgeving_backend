@@ -11,7 +11,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,8 +46,7 @@ public class ExperimentResource {
 
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") int id)
-    {
+    public void delete(@PathParam("id") int id) {
         service.delete(id);
     }
 
@@ -53,6 +54,9 @@ public class ExperimentResource {
     @Path("/")
     public int insert(Experiment experiment) {
         return service.add(experiment);
+//        HashMap<String, Integer> responceEntity = new HashMap<>();
+//        responceEntity.put("id", id);
+//        return Response.ok().entity(responceEntity).build();
     }
 
     @PUT
@@ -64,7 +68,7 @@ public class ExperimentResource {
     @GET
     @Path("/lastID")
     @JsonView(View.Public.class)
-    public int lastID(){
+    public int lastID() {
         return service.getLastID();
     }
 

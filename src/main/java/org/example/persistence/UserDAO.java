@@ -31,12 +31,16 @@ public interface UserDAO {
     @SqlUpdate("UPDATE user SET password = :password WHERE token = :token")
     public void updatePassword(@Bind("password") String password, @Bind("token") String token);
 
-    @SqlUpdate("UPDATE user SET email = :email, name = :name, role = :role) WHERE id = :id")
+    @SqlUpdate("UPDATE user SET email = :email, name = :name, role = :role WHERE id = :id")
     public int updateUser(@BindBean User user);
 
     @SqlQuery("SELECT id, name, email FROM user WHERE role = :role")
     @Mapper(UserTypeMapper.class)
     public List<User> getUsersByRole(@Bind("role") String role);
+
+    @SqlQuery("SELECT id, name, email, role FROM user")
+    @Mapper(UserTypeMapper.class)
+    public List<User> getAllUsers();
 
 
     @SqlUpdate("DELETE FROM user WHERE id = :id")

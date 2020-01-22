@@ -26,6 +26,10 @@ public class UserService {
         return userDAO.getUsersByRole(role);
     }
 
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
+
     public Response updateUser(User user) {
         return Response.ok().entity(userDAO.updateUser(user)).build();
     }
