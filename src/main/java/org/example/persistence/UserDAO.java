@@ -42,4 +42,7 @@ public interface UserDAO {
     @Mapper(UserTypeMapper.class)
     public List<User> getAllUsers();
 
+
+    @SqlUpdate("DELETE FROM user WHERE id = :id")
+    public int removeUser(@Bind("id") int id);
 }
