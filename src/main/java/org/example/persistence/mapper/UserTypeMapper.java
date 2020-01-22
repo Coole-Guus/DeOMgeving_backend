@@ -49,6 +49,9 @@ public class UserTypeMapper implements ResultSetMapper<User> {
                 case "role":
                     u.setRole(rs.getString(j));
                     break;
+                case "salt":
+                    u.setSalt(rs.getString(j));
+                    break;
             }
         }
     }
