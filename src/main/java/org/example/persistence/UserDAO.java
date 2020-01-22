@@ -58,9 +58,10 @@ public interface UserDAO {
     @Mapper(UserTypeMapper.class)
     public List<User> getAllUsers();
 
-
-
     @SqlQuery("SELECT salt FROM user where email = :email")
     String getUserSalt(@Bind("email") String email);
+
+    @SqlUpdate("DELETE FROM user WHERE id = :id")
+    public int removeUser(@Bind("id") int id);
 
 }
