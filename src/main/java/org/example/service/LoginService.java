@@ -27,11 +27,12 @@ public class LoginService {
     public Response onLogin(LoginCredentials credentials) {
         User user = userDAO.findUserByLoginCredentials(credentials);
 
-        if (user == null)
+        if (user == null || user.getRole().equalsIgnoreCase ("UNIDENTIFIED"))
             return Response.status(Response.Status.NOT_FOUND).build();
+       
+        String token = buildJWTToken (user);
+        return JWTResponse (token);
 
-        String token = buildJWTToken(user);
-        return JWTResponse(token);
     }
 
     private Response JWTResponse(String token) {

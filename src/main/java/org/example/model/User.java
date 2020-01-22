@@ -26,7 +26,7 @@ public class User {
     @Length(max = 255)
     private String name;
 
-    @OneOf(value = {"Admin", "Medewerker", "Gebruiker"})
+    @OneOf(value = {"Admin", "Medewerker", "Gebruiker", "Unidentified"})
     private String role;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-YYY HH:mm:ss")
