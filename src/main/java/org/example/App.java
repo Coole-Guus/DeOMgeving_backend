@@ -56,7 +56,7 @@ public class App extends Application<AppConfiguration> {
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         registerInjections(config, env);
         env.jersey().packages("org.example.resource");
-        env.jersey().register(AuthenticationFilter.class);
+        env.jersey().register(new AuthenticationFilter(config));
     }
 
     private void registerInjections(AppConfiguration config, Environment env) {

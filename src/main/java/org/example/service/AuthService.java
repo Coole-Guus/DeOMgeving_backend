@@ -36,7 +36,7 @@ public class AuthService {
     public Response onLogin(LoginCredentials credentials) {
         Optional<User> optionalUser = getUserByEmail(credentials);
 
-        if (!optionalUser.isPresent()) {
+        if (!optionalUser.isPresent() ) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
@@ -44,7 +44,7 @@ public class AuthService {
 
         String salt = user.getSalt();
 
-        if (!this.checkUserPassword(credentials, salt)) {
+        if (user.getRole().equalsIgnoreCase ("UNIDENTIFIED") || !this.checkUserPassword(credentials, salt)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 

@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import org.example.service.LoginService;
+import org.example.AppConfiguration;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -13,8 +13,6 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import java.io.IOException;
-import java.util.logging.Logger;
 
 @Secured
 @Provider
@@ -22,9 +20,13 @@ import java.util.logging.Logger;
 public class AuthenticationFilter implements ContainerRequestFilter {
 
     public static final String AUTHENTICATION_SCHEME = "Bearer ";
+    private Algorithm algorithm;
+    private JWTVerifier verifier;
 
-    Algorithm algorithm = Algorithm.HMAC256(LoginService.HS256_SECRET);
-    JWTVerifier verifier = JWT.require(algorithm).withIssuer("De_omgeving").build();
+    public AuthenticationFilter(AppConfiguration config) {
+        this.algorithm = Algorithm.HMAC256(config.getSecrets().getJwtSecret());
+        this.verifier = JWT.require(algorithm).withIssuer("De_omgeving").build();
+    }
 
     @Override
     public void filter(ContainerRequestContext context) {
