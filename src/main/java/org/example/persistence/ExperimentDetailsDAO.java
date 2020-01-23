@@ -1,6 +1,7 @@
 package org.example.persistence;
 
 import org.example.model.ExperimentDetails;
+import org.example.model.UploadedFile;
 import org.example.persistence.mapper.ExperimentDetailsMapper;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.BindBean;
@@ -14,6 +15,13 @@ import javax.inject.Singleton;
 @UseStringTemplate3StatementLocator
 @Singleton
 public interface ExperimentDetailsDAO {
+
+    @SqlUpdate("UPDATE experiment_details SET attachment = :fileData, attachmentName = :fileName WHERE experiment_ID = :experimentId")
+    public int setAttachment(@BindBean UploadedFile file);
+
+    @SqlQuery("SELECT experiment_ID, attachment, attachmentName FROM experiment_details WHERE experiment_ID = :experimentId")
+    @Mapper(AttachmentMapper.class)
+    public UploadedFile getAttachment(@Bind("experimentId") int experimentId);
 
     @SqlQuery("SELECT * FROM experiment_details WHERE experiment_ID = :id")
     @Mapper(ExperimentDetailsMapper.class)

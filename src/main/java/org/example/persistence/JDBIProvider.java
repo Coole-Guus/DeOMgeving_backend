@@ -8,12 +8,12 @@ public class JDBIProvider {
     private DBI dbi;
 
     public <T> T provide(T dao) {
-        System.out.println(dbi);
+
         return dao;
     }
 
     public static JDBIProvider getInstance() {
-        System.out.println("constructed");
+
         if (instance == null)
             instance = new JDBIProvider();
 

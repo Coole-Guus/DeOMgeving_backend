@@ -72,6 +72,7 @@ public class App extends Application<AppConfiguration> {
                 bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
                 bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
                 bind(LoginService.class).to(LoginService.class);
+                bind(UploadService.class).to(UploadService.class);
                 bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
                 bind(RegisterService.class).to(RegisterService.class);
                 bind(UserService.class).to(UserService.class);

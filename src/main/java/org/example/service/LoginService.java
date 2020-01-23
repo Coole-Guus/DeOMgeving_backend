@@ -21,7 +21,7 @@ public class LoginService {
     @Inject
     public LoginService(UserDAO userDAO) {
         this.userDAO = userDAO;
-        System.out.println("called" + userDAO);
+
     }
 
     public Response onLogin(LoginCredentials credentials) {
