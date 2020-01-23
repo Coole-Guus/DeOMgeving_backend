@@ -1,6 +1,6 @@
 package org.example.service;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import org.example.model.Experiment;
 import org.example.persistence.ExperimentDAO;
 import java.util.List;
