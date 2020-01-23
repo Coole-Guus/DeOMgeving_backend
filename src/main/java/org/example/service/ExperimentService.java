@@ -1,12 +1,8 @@
 package org.example.service;
 
-import com.sun.deploy.net.HttpResponse;
+import com.google.inject.Inject;
 import org.example.model.Experiment;
 import org.example.persistence.ExperimentDAO;
-import org.skife.jdbi.v2.DBI;
-
-import javax.inject.Inject;
-import java.util.Collection;
 import java.util.List;
 
 public class ExperimentService extends BaseService<Experiment> {
