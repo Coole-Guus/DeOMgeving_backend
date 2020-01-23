@@ -33,4 +33,11 @@ public class UserService {
     public Response updateUser(User user) {
         return Response.ok().entity(userDAO.updateUser(user)).build();
     }
+
+    public Response delete(int id) {
+        if (this.userDAO.removeUser(id) == 1)
+            return Response.ok().build();
+
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
 }

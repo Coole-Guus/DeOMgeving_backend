@@ -8,6 +8,7 @@ import org.example.service.UserService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
+import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -49,6 +50,12 @@ public class UserResource {
     @Path("/")
     public Response updateUser(User user) {
         return userService.updateUser(user);
+    }
+
+    @DELETE
+    @Path("/remove/{id}")
+    public Response removeUser(@PathParam("id") int id) {
+        return this.userService.delete(id);
     }
 
 
