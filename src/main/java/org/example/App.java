@@ -16,6 +16,7 @@ import org.example.model.JWTUser;
 import org.example.model.User;
 import org.example.persistence.ExperimentDAO;
 import org.example.persistence.ExperimentDetailsDAO;
+import org.example.persistence.UpdateMessageDAO;
 import org.example.persistence.UserDAO;
 import org.example.service.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -68,6 +69,7 @@ public class App extends Application<AppConfiguration> {
         cors.setInitParameter("allowedHeaders", "*");
         cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
         cors.setInitParameter("Access-Control-Allow-Origin", "*");
+        cors.setInitParameter(CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
 
         // Add URL mapping
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
@@ -87,11 +89,14 @@ public class App extends Application<AppConfiguration> {
                 bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
                 bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
                 bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
+                bind(jdbi.onDemand(UpdateMessageDAO.class)).to(UpdateMessageDAO.class);
                 bind(AuthService.class).to(AuthService.class);
                 bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
                 bind(UserService.class).to(UserService.class);
                 bind(ExperimentService.class).to(ExperimentService.class);
                 bind(config).to(AppConfiguration.class);
+                bind(UpdateMessageService.class).to(UpdateMessageService.class);
+
             }
         });
     }
