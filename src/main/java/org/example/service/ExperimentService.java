@@ -1,9 +1,8 @@
 package org.example.service;
 
+import javax.inject.Inject;
 import org.example.model.Experiment;
 import org.example.persistence.ExperimentDAO;
-
-import javax.inject.Inject;
 import java.util.List;
 
 public class ExperimentService extends BaseService<Experiment> {

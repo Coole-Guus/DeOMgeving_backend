@@ -8,7 +8,6 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.example.auth.AuthenticationFilter;
-import org.example.model.ExperimentDetails;
 import org.example.persistence.ExperimentDAO;
 import org.example.persistence.ExperimentDetailsDAO;
 import org.example.persistence.UserDAO;
@@ -18,6 +17,7 @@ import org.skife.jdbi.v2.DBI;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+import java.util.Arrays;
 import java.util.EnumSet;
 
 public class App extends Application<AppConfiguration> {
@@ -52,12 +52,13 @@ public class App extends Application<AppConfiguration> {
         cors.setInitParameter("allowedHeaders", "*");
         cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
         cors.setInitParameter("Access-Control-Allow-Origin", "*");
+        cors.setInitParameter(CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
 
         // Add URL mapping
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         registerInjections(config, env);
         env.jersey().packages("org.example.resource");
-        env.jersey().register(AuthenticationFilter.class);
+        env.jersey().register(new AuthenticationFilter(config));
     }
 
     private void registerInjections(AppConfiguration config, Environment env) {
@@ -71,13 +72,12 @@ public class App extends Application<AppConfiguration> {
                 bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
                 bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
                 bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
-                bind(LoginService.class).to(LoginService.class);
+                bind(AuthService.class).to(AuthService.class);
                 bind(UploadService.class).to(UploadService.class);
                 bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
-                bind(RegisterService.class).to(RegisterService.class);
                 bind(UserService.class).to(UserService.class);
                 bind(ExperimentService.class).to(ExperimentService.class);
-
+                bind(config).to(AppConfiguration.class);
             }
         });
     }
