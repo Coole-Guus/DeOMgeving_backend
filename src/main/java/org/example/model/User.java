@@ -26,7 +26,7 @@ public class User {
     @Length(max = 255)
     private String name;
 
-    @OneOf(value = {"Admin", "Medewerker", "Gebruiker"})
+    @OneOf(value = {"Admin", "Medewerker", "Gebruiker", "Unidentified"})
     private String role;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-YYY HH:mm:ss")
@@ -36,7 +36,10 @@ public class User {
     @Length(min = 32, max = 32)
     private String token;
 
-    public User(){ }
+    private String salt;
+
+    public User() {
+    }
 
     public User(long id, String email, String password, String name, String role, Timestamp createDate, String token) {
         this.id = id;
@@ -102,5 +105,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
