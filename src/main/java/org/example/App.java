@@ -10,6 +10,7 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.example.auth.AuthenticationFilter;
 import org.example.persistence.ExperimentDAO;
 import org.example.persistence.ExperimentDetailsDAO;
+import org.example.persistence.UpdateMessageDAO;
 import org.example.persistence.UserDAO;
 import org.example.service.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -71,12 +72,15 @@ public class App extends Application<AppConfiguration> {
                 bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
                 bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
                 bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
+                bind(jdbi.onDemand(UpdateMessageDAO.class)).to(UpdateMessageDAO.class);
                 bind(AuthService.class).to(AuthService.class);
                 bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
                 bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
                 bind(UserService.class).to(UserService.class);
                 bind(ExperimentService.class).to(ExperimentService.class);
                 bind(config).to(AppConfiguration.class);
+                bind(UpdateMessageService.class).to(UpdateMessageService.class);
+
             }
         });
     }

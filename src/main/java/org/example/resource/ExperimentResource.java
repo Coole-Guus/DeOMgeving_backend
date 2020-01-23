@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Stefan, Bart
+ * @author Stefan, Bart, Leander
  */
 @Singleton
 @Path("/experimenten")
