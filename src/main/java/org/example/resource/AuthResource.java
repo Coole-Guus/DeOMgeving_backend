@@ -35,6 +35,6 @@ public class AuthResource {
     @POST
     @Path("register")
     public Response registerUser(@Valid RegisterCredentials registerCredentials) {
-        return this.service.create(registerCredentials);
+        return this.service.createUser(registerCredentials);
     }
 }

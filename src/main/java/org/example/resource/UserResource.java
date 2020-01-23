@@ -5,6 +5,7 @@ import org.example.model.Experiment;
 import org.example.model.User;
 import org.example.service.UserService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
@@ -16,7 +17,6 @@ import java.util.List;
 @Singleton
 @Path("user")
 @Produces(MediaType.APPLICATION_JSON)
-@Secured
 public class UserResource {
 
     private final UserService userService;
@@ -42,6 +42,7 @@ public class UserResource {
 
     @GET
     @Path("/getAllUsers")
+    @RolesAllowed({"Admin", "Medewerker"})
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }

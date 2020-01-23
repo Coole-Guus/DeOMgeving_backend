@@ -6,9 +6,10 @@ import io.dropwizard.validation.OneOf;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 import java.sql.Timestamp;
 
-public class User {
+public class User implements Principal {
 
     @NotNull
     private long id;

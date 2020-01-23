@@ -1,6 +1,8 @@
 package org.example;
 
 import io.dropwizard.Application;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -8,11 +10,16 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.example.auth.AuthenticationFilter;
+import org.example.auth.JWTAuthenticator;
+import org.example.auth.JWTAuthorizer;
+import org.example.model.JWTUser;
+import org.example.model.User;
 import org.example.persistence.ExperimentDAO;
 import org.example.persistence.ExperimentDetailsDAO;
 import org.example.persistence.UserDAO;
 import org.example.service.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.skife.jdbi.v2.DBI;
 
 import javax.servlet.DispatcherType;
@@ -47,6 +54,15 @@ public class App extends Application<AppConfiguration> {
         final FilterRegistration.Dynamic cors =
                 env.servlets().addFilter("CORS", CrossOriginFilter.class);
 
+        // register authentication/authorization
+        env.jersey().register(new AuthDynamicFeature(
+                new OAuthCredentialAuthFilter.Builder<JWTUser>()
+                        .setAuthenticator(new JWTAuthenticator())
+                        .setAuthorizer(new JWTAuthorizer())
+                        .setPrefix("Bearer")
+                        .buildAuthFilter()));
+        env.jersey().register(RolesAllowedDynamicFeature.class);
+
         // Configure CORS parameters
         cors.setInitParameter("allowedOrigins", "*");
         cors.setInitParameter("allowedHeaders", "*");
@@ -72,7 +88,6 @@ public class App extends Application<AppConfiguration> {
                 bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
                 bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
                 bind(AuthService.class).to(AuthService.class);
-                bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
                 bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
                 bind(UserService.class).to(UserService.class);
                 bind(ExperimentService.class).to(ExperimentService.class);

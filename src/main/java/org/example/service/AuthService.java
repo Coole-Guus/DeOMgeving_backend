@@ -26,7 +26,7 @@ public class AuthService {
         this.jwtSecret = config.getSecrets().getJwtSecret();
     }
 
-    public Response create(RegisterCredentials user) {
+    public Response createUser(RegisterCredentials user) {
         String salt = CryptographicUtils.generateSalt();
 
         userDAO.create(user, salt, passwordHashKey);
@@ -57,7 +57,8 @@ public class AuthService {
     }
 
     private Optional<User> getUserByEmail(LoginCredentials credentials) {
-        return Optional.ofNullable(userDAO.findUserByEmail(credentials.getEmail()));
+        User user = userDAO.findUserByEmail(credentials.getEmail());
+        return Optional.ofNullable(user);
     }
 
     private Response JWTResponse(String token) {
