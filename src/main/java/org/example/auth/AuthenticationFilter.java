@@ -37,7 +37,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
 
         String authorizationHeader = context.getHeaderString(HttpHeaders.AUTHORIZATION);
-
+        System.out.println(authorizationHeader);
         if (!isValidHeader(authorizationHeader)) {
             abortUnauthorized(context);
             return;

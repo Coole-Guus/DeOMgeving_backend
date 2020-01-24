@@ -1,5 +1,6 @@
 package org.example.auth;
 
+import com.auth0.jwt.JWT;
 import io.dropwizard.auth.Authorizer;
 import org.example.model.JWTUser;
 
@@ -16,6 +17,10 @@ public class JWTAuthorizer implements Authorizer<JWTUser> {
 
     @Override
     public boolean authorize(JWTUser principal, String role, @Nullable ContainerRequestContext context) {
-        return false;
+        boolean authorization = false;
+        principal = new JWTUser();
+        principal.setRole(role);
+
+        return authorization;
     }
 }

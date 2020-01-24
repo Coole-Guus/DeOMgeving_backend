@@ -19,6 +19,7 @@ public class JWTAuthenticator implements Authenticator<String, JWTUser> {
      */
     @Override
     public Optional<JWTUser> authenticate(String jwtToken) throws AuthenticationException {
+
         return Optional.empty();
     }
 }
