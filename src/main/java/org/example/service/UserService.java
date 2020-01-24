@@ -17,10 +17,7 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public void forgotPassword(String email) {
-        String password_reset_token = String.valueOf(CryptographicUtils.generateFourDigitNumber());
-        userDAO.setToken(email, password_reset_token);
-    }
+
 
     public List<User> getUsersByRole(String role) {
         return userDAO.getUsersByRole(role);

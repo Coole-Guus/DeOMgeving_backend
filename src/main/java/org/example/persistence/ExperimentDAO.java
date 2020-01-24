@@ -24,8 +24,6 @@ public interface ExperimentDAO {
 
     //--------------------Order BY--------------------
 
-    @SqlQuery( "SELECT LAST_INSERT_ID()")
-    public int getLastID();
 
     @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur FROM experiment ORDER BY <attribute> <order>;")
     @Mapper(ExperimentMapper.class)

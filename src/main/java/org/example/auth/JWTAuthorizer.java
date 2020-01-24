@@ -17,10 +17,6 @@ public class JWTAuthorizer implements Authorizer<JWTUser> {
 
     @Override
     public boolean authorize(JWTUser principal, String role, @Nullable ContainerRequestContext context) {
-        boolean authorization = false;
-        principal = new JWTUser();
-        principal.setRole(role);
-
-        return authorization;
+       return principal.getRole().equalsIgnoreCase(role);
     }
 }

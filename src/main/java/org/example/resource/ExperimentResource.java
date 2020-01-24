@@ -7,6 +7,7 @@ import org.example.model.Experiment;
 import org.example.model.ExperimentDetails;
 import org.example.service.ExperimentService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
@@ -34,24 +35,28 @@ public class ExperimentResource {
 
     @GET
     @Path("/")
+    @RolesAllowed({"Admin", "Medewerker", "Gebruiker"})
     public List<Experiment> retrieveAll() {
         return service.getAll();
     }
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"Admin", "Medewerker", "Gebruiker"})
     public Experiment retrieve(@PathParam("id") int id) {
         return service.find(id);
     }
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"Admin", "Medewerker"})
     public void delete(@PathParam("id") int id) {
         service.delete(id);
     }
 
     @POST
     @Path("/")
+    @RolesAllowed({"Admin", "Medewerker"})
     public int insert(Experiment experiment) {
         return service.add(experiment);
 //        HashMap<String, Integer> responceEntity = new HashMap<>();
@@ -61,21 +66,18 @@ public class ExperimentResource {
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed({"Admin", "Medewerker"})
     public void update(@PathParam("id") int id, Experiment experiment) {
         service.update(id, experiment);
     }
 
-    @GET
-    @Path("/lastID")
-    @JsonView(View.Public.class)
-    public int lastID() {
-        return service.getLastID();
-    }
+
 
     //--------------------FILTER, ORDER, SEARCH--------------------
 
     @GET
     @Path("filter/{operation}/{attribute}/{value}")
+    @RolesAllowed({"Admin", "Medewerker", "Gebruiker"})
     public List<Experiment> getExperimentSelection(
             @PathParam("operation") String operation,
             @PathParam("attribute") String attribute,
@@ -85,6 +87,7 @@ public class ExperimentResource {
 
     @GET
     @Path("search/{term}")
+    @RolesAllowed({"Admin", "Medewerker", "Gebruiker"})
     public List<Experiment> getExperimentSearch(@PathParam("term") String term) {
         return service.selectBy("search", term, "");
     }

@@ -53,9 +53,6 @@ public class ExperimentService extends BaseService<Experiment> {
         }
     }
 
-    public int getLastID(){
-        return dao.getLastID();
-    }
 
 
 

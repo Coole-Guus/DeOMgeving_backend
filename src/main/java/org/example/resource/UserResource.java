@@ -17,6 +17,7 @@ import java.util.List;
 @Singleton
 @Path("user")
 @Produces(MediaType.APPLICATION_JSON)
+@RolesAllowed({"Admin"})
 public class UserResource {
 
     private final UserService userService;
@@ -25,36 +26,31 @@ public class UserResource {
     public UserResource(UserService userService) {
         this.userService = userService;
     }
-
-
-    @POST
-    @Path("/forgot/{email}")
-    public Response forgotPassword(@PathParam("email") String email) {
-        this.userService.forgotPassword(email);
-        return Response.ok().build();
-    }
-
+    
     @GET
     @Path("/usersByRole/{role}")
+    @RolesAllowed({"Admin"})
     public List<User> getUsersByRole(@PathParam("role") String role) {
         return userService.getUsersByRole(role);
     }
 
     @GET
     @Path("/getAllUsers")
-    @RolesAllowed({"Admin", "Medewerker"})
+    @RolesAllowed({"Admin"})
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PUT
     @Path("/")
+    @RolesAllowed({"Admin"})
     public Response updateUser(User user) {
         return userService.updateUser(user);
     }
 
     @DELETE
     @Path("/remove/{id}")
+    @RolesAllowed({"Admin"})
     public Response removeUser(@PathParam("id") int id) {
         return this.userService.delete(id);
     }

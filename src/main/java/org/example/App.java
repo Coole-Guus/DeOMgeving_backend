@@ -58,7 +58,7 @@ public class App extends Application<AppConfiguration> {
         // register authentication/authorization
         env.jersey().register(new AuthDynamicFeature(
                 new OAuthCredentialAuthFilter.Builder<JWTUser>()
-                        .setAuthenticator(new JWTAuthenticator())
+                        .setAuthenticator(new JWTAuthenticator(new JsonWebTokenService(config)))
                         .setAuthorizer(new JWTAuthorizer())
                         .setPrefix("Bearer")
                         .buildAuthFilter()));
@@ -91,7 +91,7 @@ public class App extends Application<AppConfiguration> {
                 bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
                 bind(jdbi.onDemand(UpdateMessageDAO.class)).to(UpdateMessageDAO.class);
                 bind(AuthService.class).to(AuthService.class);
-                bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
+                bind(JsonWebTokenService.class).to(JsonWebTokenService.class);
                 bind(UserService.class).to(UserService.class);
                 bind(ExperimentService.class).to(ExperimentService.class);
                 bind(config).to(AppConfiguration.class);

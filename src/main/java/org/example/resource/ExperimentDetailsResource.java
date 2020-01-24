@@ -2,6 +2,8 @@ package org.example.resource;
 
 import org.example.model.ExperimentDetails;
 import org.example.service.ExperimentDetailsService;
+
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ public class ExperimentDetailsResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"Admin", "Medewerker", "Gebruiker"})
     public ExperimentDetails retrieve(@PathParam("id") int id)
     {
         return service.find(id);
@@ -30,6 +33,7 @@ public class ExperimentDetailsResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"Admin", "Medewerker"})
     public void delete(@PathParam("id") int id)
     {
         service.delete(id);
@@ -37,6 +41,7 @@ public class ExperimentDetailsResource {
 
     @POST
     @Path("/")
+    @RolesAllowed({"Admin", "Medewerker"})
     public int insert(ExperimentDetails experimentDetails)
     {
         return service.add(experimentDetails);
@@ -44,6 +49,7 @@ public class ExperimentDetailsResource {
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed({"Admin", "Medewerker"})
     public void update(@PathParam("id") int id, @Valid @NotNull ExperimentDetails experimentDetails)
     {
         service.update(id, experimentDetails);
