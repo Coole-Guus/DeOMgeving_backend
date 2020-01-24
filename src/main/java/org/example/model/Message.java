@@ -17,8 +17,7 @@ public class Message {
     @NotEmpty
     private String content;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-mm-YYYY HH:mm")
-    private Date postedDate;
+    private String postedDate;
 
     public String getAuthor() {
         return author;
@@ -28,7 +27,7 @@ public class Message {
         return content;
     }
 
-    public Date getPostedDate() {
+    public String getPostedDate() {
         return postedDate;
     }
 
@@ -40,7 +39,7 @@ public class Message {
         this.content = content;
     }
 
-    public void setPostedDate(Date postedDate) {
+    public void setPostedDate(String postedDate) {
         this.postedDate = postedDate;
     }
 }
