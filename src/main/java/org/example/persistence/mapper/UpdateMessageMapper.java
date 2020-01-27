@@ -15,7 +15,7 @@ public class UpdateMessageMapper implements ResultSetMapper<Message> {
         Message message = new Message();
         message.setContent(resultSet.getString("message_tekst"));
         message.setAuthor(resultSet.getString("message_auteur"));
-        message.setPostedDate(resultSet.getTimestamp("message_datum"));
+        message.setPostedDate(resultSet.getString("message_datum"));
 
         return message;
     }

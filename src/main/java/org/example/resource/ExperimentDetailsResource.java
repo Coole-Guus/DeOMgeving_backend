@@ -42,7 +42,7 @@ public class ExperimentDetailsResource {
     @POST
     @Path("/")
     @RolesAllowed({"Admin", "Medewerker"})
-    public int insert(ExperimentDetails experimentDetails)
+    public int insert(@Valid @NotNull ExperimentDetails experimentDetails)
     {
         return service.add(experimentDetails);
     }

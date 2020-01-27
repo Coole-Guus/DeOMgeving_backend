@@ -1,33 +1,25 @@
 package org.example.model;
 
+import javafx.beans.DefaultProperty;
+
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.DefaultValue;
 
 public class ExperimentDetails {
+
     @NotNull
     private int experimentId;
 
-    @NotNull
-    private String netwerk;
+    private String netwerk = "";
+    private String status = "";
+    private String kosten_inovatie = "";
+    private String kosten_anders = "";
+    private String doorlooptijd = "";
+    private String beschrijving = "";
+    private String overige_opmerkingen = "";
+    private String archief_type = null;
 
-    @NotNull
-    private String status;
-
-    @NotNull
-    private String kosten_inovatie;
-
-    @NotNull
-    private String kosten_anders;
-
-    @NotNull
-    private String doorlooptijd;
-
-    @NotNull
-    private String beschrijving	;
-
-    @NotNull
-    private String voortgang;
-
-    private String archief_type;
 
     public int getExperimentId() {
         return experimentId;
@@ -85,12 +77,12 @@ public class ExperimentDetails {
         this.beschrijving = beschrijving;
     }
 
-    public String getVoortgang() {
-        return voortgang;
+    public String getOverige_opmerkingen() {
+        return overige_opmerkingen;
     }
 
-    public void setVoortgang(String voortgang) {
-        this.voortgang = voortgang;
+    public void setOverige_opmerkingen(String overige_opmerkingen) {
+        this.overige_opmerkingen = overige_opmerkingen;
     }
 
     public String getArchief_type() {

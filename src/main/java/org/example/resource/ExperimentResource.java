@@ -91,5 +91,4 @@ public class ExperimentResource {
     public List<Experiment> getExperimentSearch(@PathParam("term") String term) {
         return service.selectBy("search", term, "");
     }
-
 }
