@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.example.model.User;
 
-import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Base64;
@@ -26,7 +25,7 @@ public class CryptographicUtils {
 
     public static String generateSalt() {
         SecureRandom random = new SecureRandom();
-        byte bytes[] = new byte[PASSWORD_HASH_LENGTH];
+        byte[] bytes = new byte[PASSWORD_HASH_LENGTH];
         random.nextBytes(bytes);
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         String salt = encoder.encodeToString(bytes).substring(0, PASSWORD_HASH_LENGTH);

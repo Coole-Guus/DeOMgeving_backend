@@ -1,9 +1,8 @@
 package org.example.resource;
-import org.example.auth.Secured;
+
 import org.example.model.Message;
 import org.example.service.UpdateMessageService;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -20,7 +19,6 @@ import java.util.List;
 @Singleton
 @Path("/messages")
 @Produces(MediaType.APPLICATION_JSON)
-@Secured
 public class UpdateMessageResource {
 
     private final UpdateMessageService service;

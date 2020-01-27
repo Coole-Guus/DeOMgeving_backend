@@ -1,7 +1,7 @@
 package org.example.model;
 
 public interface Credentials {
-    public String getEmail();
+    String getEmail();
 
-    public String getPassword();
+    String getPassword();
 }

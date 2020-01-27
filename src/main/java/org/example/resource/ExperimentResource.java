@@ -1,10 +1,6 @@
 package org.example.resource;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import org.example.View;
-import org.example.auth.Secured;
 import org.example.model.Experiment;
-import org.example.model.ExperimentDetails;
 import org.example.service.ExperimentService;
 
 import javax.annotation.security.RolesAllowed;
@@ -12,9 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,7 +16,6 @@ import java.util.List;
 @Singleton
 @Path("/experimenten")
 @Produces(MediaType.APPLICATION_JSON)
-@Secured
 public class ExperimentResource {
 
     private final ExperimentService service;

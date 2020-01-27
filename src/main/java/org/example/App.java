@@ -9,11 +9,9 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
-import org.example.auth.AuthenticationFilter;
 import org.example.auth.JWTAuthenticator;
 import org.example.auth.JWTAuthorizer;
 import org.example.model.JWTUser;
-import org.example.model.User;
 import org.example.persistence.ExperimentDAO;
 import org.example.persistence.ExperimentDetailsDAO;
 import org.example.persistence.UpdateMessageDAO;
@@ -25,7 +23,6 @@ import org.skife.jdbi.v2.DBI;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
-import java.util.Arrays;
 import java.util.EnumSet;
 
 public class App extends Application<AppConfiguration> {
@@ -75,7 +72,6 @@ public class App extends Application<AppConfiguration> {
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         registerInjections(config, env);
         env.jersey().packages("org.example.resource");
-        env.jersey().register(new AuthenticationFilter(config));
     }
 
     private void registerInjections(AppConfiguration config, Environment env) {
@@ -86,10 +82,13 @@ public class App extends Application<AppConfiguration> {
 
             @Override
             protected void configure() {
-                bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
-                bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
-                bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
-                bind(jdbi.onDemand(UpdateMessageDAO.class)).to(UpdateMessageDAO.class);
+                // verplaatsen naar service laag
+                    bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
+                    bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
+                    bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
+                    bind(jdbi.onDemand(UpdateMessageDAO.class)).to(UpdateMessageDAO.class);
+                // eind verplaatsing
+
                 bind(AuthService.class).to(AuthService.class);
                 bind(UploadService.class).to(UploadService.class);
                 bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);

@@ -1,7 +1,6 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -14,7 +13,7 @@ public class RegisterCredentials implements Credentials {
 
     @JsonProperty
     @NotNull
-    @Length(max = 191)
+    @Size( min = 3, max = 191)
     private String email;
 
     @NotNull
@@ -25,7 +24,7 @@ public class RegisterCredentials implements Credentials {
     private String password;
 
     @NotNull
-    @Length(max = 255)
+    @Size(min = 3, max = 255 )
     private String name;
 
     public String getEmail() {

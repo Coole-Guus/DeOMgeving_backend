@@ -17,15 +17,15 @@ import javax.inject.Singleton;
 public interface ExperimentDetailsDAO {
 
     @SqlUpdate("UPDATE experiment_details SET attachment = :fileData, attachmentName = :fileName WHERE experiment_ID = :experimentId")
-    public int setAttachment(@BindBean UploadedFile file);
+    int setAttachment(@BindBean UploadedFile file);
 
     @SqlQuery("SELECT experiment_ID, attachment, attachmentName FROM experiment_details WHERE experiment_ID = :experimentId")
     @Mapper(AttachmentMapper.class)
-    public UploadedFile getAttachment(@Bind("experimentId") int experimentId);
+    UploadedFile getAttachment(@Bind("experimentId") int experimentId);
 
     @SqlQuery("SELECT * FROM experiment_details WHERE experiment_ID = :id")
     @Mapper(ExperimentDetailsMapper.class)
-    public ExperimentDetails find(@Bind("id") int id);
+    ExperimentDetails find(@Bind("id") int id);
 
     @SqlUpdate("UPDATE experiment_details SET " +
             "netwerk = :netwerk," +
@@ -37,14 +37,14 @@ public interface ExperimentDetailsDAO {
             "voortgang = :voortgang," +
             "archief_type = :archief_type" +
             " WHERE experiment_ID = :id")
-    public void updateExperimentDetails(@Bind("id") int id, @BindBean ExperimentDetails experimentDetails);
+    void updateExperimentDetails(@Bind("id") int id, @BindBean ExperimentDetails experimentDetails);
 
     @SqlUpdate("INSERT INTO experiment_details " +
             "(experiment_ID, netwerk, status, kosten_inovatie, kosten_anders, doorlooptijd, beschrijving, overige_opmerkingen, archief_type) " +
             "VALUES " +
             "(:experimentId, :netwerk, :status, :kosten_inovatie, :kosten_anders, :doorlooptijd, :beschrijving, :overige_opmerkingen, :archief_type) ")
-    public int addExperimentDetails( @BindBean ExperimentDetails experimentDetails);
+    int addExperimentDetails(@BindBean ExperimentDetails experimentDetails);
 
     @SqlUpdate("DELETE FROM experiment_details WHERE experiment_id = :id")
-    public void deleteExperimentDetails(@Bind("id") int id);
+    void deleteExperimentDetails(@Bind("id") int id);
 }
