@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Stefan, Bart
+ * @author Stefan, Bart, Leander
  */
 @Singleton
 @Path("/experimenten")
@@ -88,5 +88,4 @@ public class ExperimentResource {
     public List<Experiment> getExperimentSearch(@PathParam("term") String term) {
         return service.selectBy("search", term, "");
     }
-
 }
