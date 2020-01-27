@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.AppConfiguration;
+import org.example.model.Credentials;
 import org.example.model.LoginCredentials;
 import org.example.model.RegisterCredentials;
 import org.example.model.User;
@@ -26,10 +27,15 @@ public class AuthService {
         this.jwtSecret = config.getSecrets().getJwtSecret();
     }
 
-    public Response createUser(RegisterCredentials user) {
-        String salt = CryptographicUtils.generateSalt();
+    public Response createUser(RegisterCredentials credentials) {
+        Optional<User> optionalUser = getUserByEmail(credentials);
 
-        userDAO.create(user, salt, passwordHashKey);
+        if(optionalUser.isPresent())
+            return Response.status(Response.Status.CONFLICT).build();
+
+        String salt = CryptographicUtils.generateSalt();
+        userDAO.create(credentials, salt, passwordHashKey);
+
         return Response.ok().build();
     }
 
@@ -52,11 +58,11 @@ public class AuthService {
         return JWTResponse(token);
     }
 
-    private boolean checkUserPassword(LoginCredentials credentials, String salt) {
+    private boolean checkUserPassword(Credentials credentials, String salt) {
         return userDAO.userExistWithCredentials(credentials, salt, passwordHashKey);
     }
 
-    private Optional<User> getUserByEmail(LoginCredentials credentials) {
+    private Optional<User> getUserByEmail(Credentials credentials) {
         User user = userDAO.findUserByEmail(credentials.getEmail());
         return Optional.ofNullable(user);
     }

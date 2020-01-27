@@ -1,7 +1,6 @@
 package org.example.persistence;
 
-import org.example.model.LoginCredentials;
-import org.example.model.RegisterCredentials;
+import org.example.model.Credentials;
 import org.example.model.User;
 import org.example.persistence.mapper.UserTypeMapper;
 import org.example.util.CryptographicUtils;
@@ -12,7 +11,6 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @RegisterMapper(UserTypeMapper.class)
@@ -21,7 +19,7 @@ public interface UserDAO {
     @SqlQuery("SELECT true FROM user WHERE email = :email AND " +
             "password = SHA2( CONCAT(:password , :salt , :secret_key), " + CryptographicUtils.PASSWORD_HASH_LENGTH +")")
     public boolean userExistWithCredentials(
-            @BindBean LoginCredentials login, @Bind("salt") String salt, @Bind("secret_key") String secret_key);
+            @BindBean Credentials login, @Bind("salt") String salt, @Bind("secret_key") String secret_key);
 
     @SqlQuery("Select * FROM user WHERE email = :email")
     @Mapper(UserTypeMapper.class)
@@ -30,7 +28,7 @@ public interface UserDAO {
 
 
     @SqlUpdate("INSERT INTO user (email, password, name, salt) VALUES ( :email, SHA2( CONCAT(:password, :salt , :secret_key), "+CryptographicUtils.PASSWORD_HASH_LENGTH+ "), :name, :salt)")
-    public void create(@BindBean RegisterCredentials newUser,
+    public void create(@BindBean Credentials userCredentials,
                        @Bind("salt") String salt, @Bind("secret_key") String secret_key);
 
 

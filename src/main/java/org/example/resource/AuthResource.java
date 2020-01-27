@@ -4,7 +4,6 @@ import org.example.model.LoginCredentials;
 import org.example.model.RegisterCredentials;
 import org.example.service.AuthService;
 
-import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.validation.Valid;
@@ -18,7 +17,6 @@ import javax.ws.rs.core.Response;
 @Singleton
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/")
-@PermitAll
 public class AuthResource {
 
     private AuthService service;
@@ -30,13 +28,13 @@ public class AuthResource {
 
     @POST
     @Path("login")
-    public Response onLogin(@NotNull @Valid LoginCredentials credentials) {
-        return service.onLogin(credentials);
+    public Response onLogin(@NotNull @Valid LoginCredentials loginCredentials) {
+        return service.onLogin(loginCredentials);
     }
 
     @POST
     @Path("register")
-    public Response registerUser(@Valid RegisterCredentials registerCredentials) {
+    public Response registerUser(@NotNull @Valid RegisterCredentials registerCredentials) {
         return this.service.createUser(registerCredentials);
     }
 }
