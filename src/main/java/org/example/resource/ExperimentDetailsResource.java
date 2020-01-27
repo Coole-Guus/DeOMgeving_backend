@@ -37,7 +37,7 @@ public class ExperimentDetailsResource {
 
     @POST
     @Path("/")
-    public int insert(ExperimentDetails experimentDetails)
+    public int insert(@Valid @NotNull ExperimentDetails experimentDetails)
     {
         return service.add(experimentDetails);
     }

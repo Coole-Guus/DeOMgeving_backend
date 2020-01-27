@@ -20,11 +20,11 @@ public class Experiment implements Principal {
     private String wijziging_datum;
 
     @NotNull
-    @OneOf(value = {"Idee", "Lab in", "Lab uit"})
+    @OneOf(value = {"Idee", "Lab in", "Lab uit","n.v.t"})
     private String fase;
 
     @NotNull
-    @OneOf(value = {"Groen", "Oranje", "Rood"})
+    @OneOf(value = {"Groen", "Oranje", "Rood","Grijs"})
     private String color;
 
     @NotNull
