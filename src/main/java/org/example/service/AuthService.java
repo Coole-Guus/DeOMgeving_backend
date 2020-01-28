@@ -10,11 +10,16 @@ import org.example.persistence.UserDAO;
 import org.example.util.CryptographicUtils;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 
 public class AuthService {
+
+    private JsonWebTokenService jwtService;
 
     private final String passwordHashKey;
     private final String jwtSecret;
@@ -22,7 +27,8 @@ public class AuthService {
     private AppConfiguration config;
 
     @Inject
-    public AuthService(DAOFactory factory, AppConfiguration config) {
+    public AuthService(DAOFactory factory, AppConfiguration config, JsonWebTokenService jwtService) {
+        this.jwtService = jwtService;
         this.userDAO = factory.onDemand(UserDAO.class);
         this.passwordHashKey = config.getSecrets().getPasswordHash();
         this.jwtSecret = config.getSecrets().getJwtSecret();
@@ -72,6 +78,21 @@ public class AuthService {
         HashMap<String, String> ResponseEntity = new HashMap<>();
         ResponseEntity.put("jwtToken", token);
         return Response.ok().entity(ResponseEntity).build();
+    }
+
+
+    public void refreshToken(HttpHeaders headers) {
+        String JWT = headers.getRequestHeader("Authorization").get(0);
+        JWT = JWT.replace("Bearer ", "");
+
+        String jwt = jwtService.createExpireJWT();
+        System.out.println(jwt);
+
+        System.out.println(jwtService.isValid(JWT));
+        System.out.println(jwtService.decodeJwt(JWT));
+
+        System.out.println(JWT);
+
     }
 
 
