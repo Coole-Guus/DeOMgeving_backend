@@ -1,99 +1,137 @@
 package org.example.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.dropwizard.validation.OneOf;
-import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
+import java.util.List;
 
 public class ExperimentStats {
 
-    private int lab_uit_stats;
+    @NotNull
+    private int totaal;
 
-    private int lab_in_stats;
+    @NotNull
+    private int aantalExperimenten;
 
-    private int idee_stats;
+    @NotNull
+    private int aantalIdee;
 
-    private int experimenten_stats;
+    @NotNull
+    private int aantalLabIn;
 
-    private int vaste_dienst_stats;
+    @NotNull
+    private int aantalLabUit;
 
-    private int groen_stats;
+    @NotNull
+    private int aantalVasteDienst;
 
-    private int oranje_stats;
+    @NotNull
+    private int aantalGroen;
 
-    private int rood_stats;
+    @NotNull
+    private int aantalOranje;
 
-    private int gewijzig_laatste_30_dagen_stats;
+    @NotNull
+    private int aantalRood;
 
-    public int getLabUitStats(){
-        return lab_uit_stats;
+    @NotNull
+    private int aantalGewijzigdSinds;
+
+    private List<Experiment> gewijzigdeExperimenten;
+
+    private List<Experiment> gewijzigdeDiensten;
+
+    public int getTotaal() {
+        return totaal;
     }
 
-    public int getIabInStats(){
-        return lab_in_stats;
+    public void setTotaal(int totaal) {
+        this.totaal = totaal;
     }
 
-    public int getIdeeStats(){
-        return idee_stats;
+    public int getAantalExperimenten() {
+        return aantalExperimenten;
     }
 
-    public int getExperimentenStats(){
-        return experimenten_stats;}
-
-    public int getVasteDienstStats(){
-        return vaste_dienst_stats;
+    public void setAantalExperimenten(int aantalExperimenten) {
+        this.aantalExperimenten = aantalExperimenten;
     }
 
-    public int getGroenStats(){
-        return groen_stats;
+    public int getAantalIdee() {
+        return aantalIdee;
     }
 
-    public int getRoodStats(){
-        return rood_stats;
+    public void setAantalIdee(int aantalIdee) {
+        this.aantalIdee = aantalIdee;
     }
 
-    public int getOranjeStats(){
-        return oranje_stats;
+    public int getAantalLabIn() {
+        return aantalLabIn;
     }
 
-    public int getGewijzigf(){
-        return gewijzig_laatste_30_dagen_stats;
+    public void setAantalLabIn(int aantalLabIn) {
+        this.aantalLabIn = aantalLabIn;
     }
 
-    public void setLabUitStats(int lab_uit_stats){
-        this.lab_uit_stats = lab_uit_stats;
+    public int getAantalLabUit() {
+        return aantalLabUit;
     }
 
-    public void setLabInStats(int lab_in_stats){
-        this.lab_in_stats = lab_in_stats;
+    public void setAantalLabUit(int aantalLabUit) {
+        this.aantalLabUit = aantalLabUit;
     }
 
-    public void setIdeeStats(int idee_stats){
-        this.idee_stats = idee_stats;
+    public int getAantalVasteDienst() {
+        return aantalVasteDienst;
     }
 
-    public void setExperimentenStats(int experimenten_stats){
-        this.experimenten_stats =experimenten_stats;
+    public void setAantalVasteDienst(int aantalVasteDienst) {
+        this.aantalVasteDienst = aantalVasteDienst;
     }
 
-    public void setVasteDienstStats(int vaste_dienst_stats){
-        this.vaste_dienst_stats = vaste_dienst_stats;
+    public int getAantalGroen() {
+        return aantalGroen;
     }
 
-    public void setGroenStats(int groen_stats){
-        this.groen_stats = groen_stats;
+    public void setAantalGroen(int aantalGroen) {
+        this.aantalGroen = aantalGroen;
     }
 
-    public void setRoodStats(int rood_stats){
-        this.rood_stats = rood_stats;
+    public int getAantalOranje() {
+        return aantalOranje;
     }
 
-    public void setOranjeStats(int oranje_stats){
-        this.oranje_stats = oranje_stats;
+    public void setAantalOranje(int aantalOranje) {
+        this.aantalOranje = aantalOranje;
     }
 
-    public void setGewijzig(int gewijzig_laatste_30_dagen_stats){
-        this.gewijzig_laatste_30_dagen_stats = gewijzig_laatste_30_dagen_stats;
+    public int getAantalRood() {
+        return aantalRood;
+    }
+
+    public void setAantalRood(int aantalRood) {
+        this.aantalRood = aantalRood;
+    }
+
+    public int getAantalGewijzigdSinds() {
+        return aantalGewijzigdSinds;
+    }
+
+    public void setAantalGewijzigdSinds(int aantalGewijzigdSinds) {
+        this.aantalGewijzigdSinds = aantalGewijzigdSinds;
+    }
+
+    public List<Experiment> getGewijzigdeExperimenten() {
+        return gewijzigdeExperimenten;
+    }
+
+    public void setGewijzigdeExperimenten(List<Experiment> gewijzigdeExperimenten) {
+        this.gewijzigdeExperimenten = gewijzigdeExperimenten;
+    }
+
+    public List<Experiment> getGewijzigdeDiensten() {
+        return gewijzigdeDiensten;
+    }
+
+    public void setGewijzigdeDiensten(List<Experiment> gewijzigdeDiensten) {
+        this.gewijzigdeDiensten = gewijzigdeDiensten;
     }
 }
