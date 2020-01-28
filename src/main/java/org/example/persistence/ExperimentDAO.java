@@ -12,6 +12,7 @@ import org.skife.jdbi.v2.sqlobject.stringtemplate.UseStringTemplate3StatementLoc
 
 import javax.inject.Singleton;
 import java.util.List;
+
 @UseStringTemplate3StatementLocator
 @Singleton
 public interface ExperimentDAO {
@@ -50,11 +51,6 @@ public interface ExperimentDAO {
     List<Experiment> filterSearch(@Bind("searchString") String searchString);
 
 
-
-
-
-
-
     @SqlQuery("SELECT * FROM experiment WHERE experiment_ID = :id")
     @Mapper(ExperimentMapper.class)
     Experiment find(@Bind("id") int id);
@@ -79,4 +75,6 @@ public interface ExperimentDAO {
     //Select last insert experiment_id
     @SqlQuery("SELECT LAST_INSERT_ID();")
     int lastInsert();
+
+    void close();
 }

@@ -19,4 +19,6 @@ public interface UpdateMessageDAO {
     @SqlUpdate("INSERT INTO message (experiment_ID, message_auteur, message_tekst, message_datum) " +
             "VALUES (:experimentId, :author, :content, CURRENT_TIMESTAMP)")
     int postNewMessage(@BindBean Message newMessage, @Bind("experimentId") int experimentId);
+
+    void close();
 }

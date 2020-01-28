@@ -19,9 +19,12 @@ public class UploadService {
 
     public void uploadAttachment(UploadedFile file) {
         experimentDetailsDAO.setAttachment(file);
+        experimentDetailsDAO.close();
     }
 
     public UploadedFile getAttachment(int experimentId) {
-        return this.experimentDetailsDAO.getAttachment(experimentId);
+        UploadedFile uploadedFile = this.experimentDetailsDAO.getAttachment(experimentId);
+        this.experimentDetailsDAO.close();
+        return uploadedFile;
     }
 }

@@ -6,7 +6,7 @@ import org.example.persistence.ExperimentDetailsDAO;
 
 import javax.inject.Inject;
 
-public class ExperimentDetailsService  extends BaseService<ExperimentDetails> {
+public class ExperimentDetailsService extends BaseService<ExperimentDetails> {
     private final ExperimentDetailsDAO dao;
 
     @Inject
@@ -15,19 +15,24 @@ public class ExperimentDetailsService  extends BaseService<ExperimentDetails> {
     }
 
     public ExperimentDetails find(int id) {
-        return requireResult(dao.find(id));
+        ExperimentDetails result = dao.find(id);
+        dao.close();
+        return requireResult(result);
     }
 
     public int add(ExperimentDetails experimentDetails) {
-        return dao.addExperimentDetails(experimentDetails);
+        int response = dao.addExperimentDetails(experimentDetails);
+        dao.close();
+        return response;
     }
 
     public void update(int id, ExperimentDetails experiment) {
-
         dao.updateExperimentDetails(id, experiment);
+        dao.close();;
     }
 
     public void delete(int id) {
         dao.deleteExperimentDetails(id);
+        dao.close();
     }
 }

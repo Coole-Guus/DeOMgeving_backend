@@ -19,14 +19,16 @@ public class UpdateMessageService extends BaseService<ExperimentDetails> {
     }
 
     public List<Message> getAllMessages(int experimentId) {
-        return dao.getAllMessages(experimentId);
+        List<Message> messageList = dao.getAllMessages(experimentId);
+        dao.close();
+        return messageList;
     }
 
     public Response addMessage(Message newMessage, int experimentId) {
         int result = dao.postNewMessage(newMessage, experimentId);
+        dao.close();
+
         int MESSAGE_CREATED = 1;
-
-
         if (result == MESSAGE_CREATED) {
             return Response.ok().build();
         }

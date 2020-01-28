@@ -37,19 +37,20 @@ public class AuthService {
     public Response createUser(RegisterCredentials credentials) {
         Optional<User> optionalUser = getUserByEmail(credentials);
 
-        if(optionalUser.isPresent())
+        if (optionalUser.isPresent())
             return Response.status(Response.Status.CONFLICT).build();
 
         String salt = CryptographicUtils.generateSalt();
         userDAO.create(credentials, salt, passwordHashKey);
 
+        userDAO.close();
         return Response.ok().build();
     }
 
     public Response onLogin(LoginCredentials credentials) {
         Optional<User> optionalUser = getUserByEmail(credentials);
 
-        if (!optionalUser.isPresent() ) {
+        if (!optionalUser.isPresent()) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
@@ -57,11 +58,12 @@ public class AuthService {
 
         String salt = user.getSalt();
 
-        if (user.getRole().equalsIgnoreCase ("UNIDENTIFIED") || !this.checkUserPassword(credentials, salt)) {
+        if (user.getRole().equalsIgnoreCase("UNIDENTIFIED") || !this.checkUserPassword(credentials, salt)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
         String token = CryptographicUtils.buildJWTToken(user, jwtSecret);
+        userDAO.close();
         return JWTResponse(token);
     }
 

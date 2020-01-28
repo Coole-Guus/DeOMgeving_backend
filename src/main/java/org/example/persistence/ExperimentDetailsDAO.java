@@ -47,4 +47,6 @@ public interface ExperimentDetailsDAO {
 
     @SqlUpdate("DELETE FROM experiment_details WHERE experiment_id = :id")
     void deleteExperimentDetails(@Bind("id") int id);
+
+    void close();
 }
