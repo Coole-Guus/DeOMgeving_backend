@@ -17,36 +17,36 @@ import javax.inject.Singleton;
 public interface ExperimentDetailsDAO {
 
     @SqlUpdate("UPDATE experiment_details SET attachment = :fileData, attachmentName = :fileName WHERE experiment_ID = :experimentId")
-    int setAttachment(@BindBean UploadedFile file);
+    public int setAttachment(@BindBean UploadedFile file);
 
     @SqlQuery("SELECT experiment_ID, attachment, attachmentName FROM experiment_details WHERE experiment_ID = :experimentId")
     @Mapper(AttachmentMapper.class)
-    UploadedFile getAttachment(@Bind("experimentId") int experimentId);
+    public UploadedFile getAttachment(@Bind("experimentId") int experimentId);
 
     @SqlQuery("SELECT * FROM experiment_details WHERE experiment_ID = :id")
     @Mapper(ExperimentDetailsMapper.class)
-    ExperimentDetails find(@Bind("id") int id);
+    public ExperimentDetails find(@Bind("id") int id);
 
     @SqlUpdate("UPDATE experiment_details SET " +
             "netwerk = :netwerk," +
             "status = :status," +
-            "kosten_inovatie = :kosten_inovatie," +
+            "kosten_innovatie = :kosten_innovatie," +
             "kosten_anders = :kosten_anders," +
             "doorlooptijd = :doorlooptijd," +
-            "beschrijving = :beschrijving," +
-            "voortgang = :voortgang," +
+            "overige_opmerkingen = :overige_opmerkingen," +
             "archief_type = :archief_type" +
             " WHERE experiment_ID = :id")
-    void updateExperimentDetails(@Bind("id") int id, @BindBean ExperimentDetails experimentDetails);
+    public void updateExperimentDetails(@Bind("id") int id, @BindBean ExperimentDetails experimentDetails);
 
     @SqlUpdate("INSERT INTO experiment_details " +
-            "(experiment_ID, netwerk, status, kosten_inovatie, kosten_anders, doorlooptijd, beschrijving, overige_opmerkingen, archief_type) " +
+            "(experiment_ID, netwerk, status, kosten_innovatie, kosten_anders, doorlooptijd, overige_opmerkingen, archief_type) " +
             "VALUES " +
-            "(:experimentId, :netwerk, :status, :kosten_inovatie, :kosten_anders, :doorlooptijd, :beschrijving, :overige_opmerkingen, :archief_type) ")
-    int addExperimentDetails(@BindBean ExperimentDetails experimentDetails);
+            "(:experimentId, :netwerk, :status, :kosten_innovatie, :kosten_anders, :doorlooptijd, :overige_opmerkingen, :archief_type) ")
+    public int addExperimentDetails( @BindBean ExperimentDetails experimentDetails);
 
     @SqlUpdate("DELETE FROM experiment_details WHERE experiment_id = :id")
-    void deleteExperimentDetails(@Bind("id") int id);
+    public void deleteExperimentDetails(@Bind("id") int id);
 
     void close();
+
 }

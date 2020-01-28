@@ -18,49 +18,59 @@ import java.util.List;
 public interface ExperimentDAO {
 
 
-    @SqlQuery("SELECT * FROM experiment")
+    @SqlQuery("SELECT * FROM experiment INNER JOIN experiment_details ON experiment.experiment_ID=experiment_details.experiment_ID WHERE archief_type IS NULL AND fase != 'Vaste dienst';")
     @Mapper(ExperimentMapper.class)
-    List<Experiment> getAll();
-
+    public List<Experiment> getAll();
 
     //--------------------Order BY--------------------
 
-
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur FROM experiment ORDER BY <attribute> <order>;")
+    @SqlQuery("SELECT * FROM experiment INNER JOIN experiment_details ON experiment.experiment_ID=experiment_details.experiment_ID WHERE archief_type IS NULL AND fase != 'Vaste dienst' ORDER BY <attribute> <order>;")
     @Mapper(ExperimentMapper.class)
-    List<Experiment> orderBy(@Define("attribute") String attribute, @Define("order") String order);
+    public List<Experiment> orderBy(@Define("attribute") String attribute, @Define("order") String order);
+
 
     //--------------------FILTERS--------------------
-
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur FROM experiment WHERE <filter> = :value ;")
+    @SqlQuery("SELECT * FROM experiment INNER JOIN experiment_details ON experiment.experiment_ID=experiment_details.experiment_ID WHERE archief_type IS NULL AND fase != 'Vaste dienst' AND <filter> = :value;")
     @Mapper(ExperimentMapper.class)
-    List<Experiment> filter(@Define("filter") String filter, @Bind("value") String value);
+    public List<Experiment> filter(@Define("filter") String filter, @Bind("value") String value);
+
 
     //--------------------ARCHIVE--------------------
 
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment.experiment_ID, experiment.status_kleur FROM experiment INNER JOIN experiment_details ON experiment.experiment_ID=experiment_details.experiment_ID\n" +
-            "WHERE archief_type = :type;")
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment.experiment_ID, experiment.status_kleur, experiment.beschrijving  FROM experiment INNER JOIN experiment_details ON experiment.experiment_ID=experiment_details.experiment_ID\n" +
+            "WHERE archief_type = :type AND fase != 'Vaste dienst';")
     @Mapper(ExperimentMapper.class)
-    List<Experiment> filterArchive(@Bind("type") String type);
+    public List<Experiment> filterArchive(@Bind("type") String type);
 
     //--------------------SEARCH--------------------
 
     //Filter search bar
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur FROM experiment WHERE experiment_naam LIKE %:searchString% OR experiment_leider_primair LIKE %:searchString% OR experiment_leider_secundair LIKE %:searchString%;")
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE archief_type IS NULL AND experiment_naam LIKE :searchString OR experiment_leider_primair LIKE :searchString OR experiment_leider_secundair LIKE :searchString AND fase != 'Vaste dienst';")
     @Mapper(ExperimentMapper.class)
-    List<Experiment> filterSearch(@Bind("searchString") String searchString);
+    public List<Experiment> filterSearch(@Bind("searchString")String searchString);
+
+    //--------------------VASTE DIENSTEN--------------------
+
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur FROM experiment WHERE fase = 'Vaste dienst' ORDER BY <attribute> <order>;")
+    @Mapper(ExperimentMapper.class)
+    public List<Experiment> orderByDiensten(@Define("attribute") String attribute, @Define("order") String order);
+
+    //--------------------EXPERIMENTEN STATS--------------------
+
+
+
 
 
     @SqlQuery("SELECT * FROM experiment WHERE experiment_ID = :id")
     @Mapper(ExperimentMapper.class)
-    Experiment find(@Bind("id") int id);
+    public Experiment find(@Bind("id") int id);
 
     @SqlUpdate("DELETE FROM experiment WHERE experiment_ID = :id")
-    void delete(@Bind("id") int id);
+    public void delete(@Bind("id")int id);
 
-    @SqlUpdate("INSERT INTO experiment (experiment_naam, wijziging_datum, fase, experiment_leider_primair, experiment_leider_secundair, status_kleur) " +
-            "VALUES (:experiment_naam, :wijziging_datum, :fase, :experiment_leider_primair, :experiment_leider_secundair, :color);")
-    void add(@BindBean Experiment newExperiment);
+    @SqlUpdate("INSERT INTO experiment (experiment_naam, wijziging_datum, fase, experiment_leider_primair, experiment_leider_secundair, status_kleur, beschrijving) " +
+            "VALUES (:experiment_naam, :wijziging_datum, :fase, :experiment_leider_primair, :experiment_leider_secundair, :color, :beschrijving);")
+    public void add(@BindBean Experiment newExperiment);
 
     @SqlUpdate("UPDATE experiment SET " +
             "experiment_naam = :experiment_naam," +
@@ -70,7 +80,7 @@ public interface ExperimentDAO {
             "experiment_leider_primair = :experiment_leider_primair, " +
             "experiment_leider_secundair = :experiment_leider_secundair " +
             "WHERE experiment_ID = :id")
-    void update(@Bind("id") int id, @BindBean Experiment updatedExperiment);
+    public void update(@Bind("id") int id, @BindBean Experiment updatedExperiment);
 
     //Select last insert experiment_id
     @SqlQuery("SELECT LAST_INSERT_ID();")

@@ -18,6 +18,8 @@ public class ExperimentMapper  implements ResultSetMapper<Experiment> {
         mappedExperiment.setColor(resultSet.getString("status_kleur"));
         mappedExperiment.setExperiment_leider_primair(resultSet.getString("experiment_leider_primair"));
         mappedExperiment.setExperiment_leider_secundair(resultSet.getString("experiment_leider_secundair"));
+        mappedExperiment.setBeschrijving(resultSet.getString("beschrijving"));
+
         return mappedExperiment;
     }
 }
