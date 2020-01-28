@@ -33,7 +33,7 @@ public interface ExperimentDetailsDAO {
             "kosten_innovatie = :kosten_innovatie," +
             "kosten_anders = :kosten_anders," +
             "doorlooptijd = :doorlooptijd," +
-            "voortgang = :voortgang," +
+            "overige_opmerkingen = :overige_opmerkingen," +
             "archief_type = :archief_type" +
             " WHERE experiment_ID = :id")
     public void updateExperimentDetails(@Bind("id") int id, @BindBean ExperimentDetails experimentDetails);

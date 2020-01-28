@@ -17,7 +17,7 @@ public class ExperimentDetailsMapper implements ResultSetMapper<ExperimentDetail
         mappedExperimentDetails.setKosten_innovatie(r.getString("kosten_innovatie"));
         mappedExperimentDetails.setKosten_anders(r.getString("kosten_anders"));
         mappedExperimentDetails.setDoorlooptijd(r.getString("doorlooptijd"));
-        mappedExperimentDetails.setOverige_opmerkingen(r.getString("voortgang"));
+        mappedExperimentDetails.setOverige_opmerkingen(r.getString("overige_opmerkingen"));
         mappedExperimentDetails.setArchief_type(r.getString("archief_type"));
         return mappedExperimentDetails;
     }
