@@ -5,6 +5,7 @@ import org.example.model.Credentials;
 import org.example.model.LoginCredentials;
 import org.example.model.RegisterCredentials;
 import org.example.model.User;
+import org.example.persistence.DAOFactory;
 import org.example.persistence.UserDAO;
 import org.example.util.CryptographicUtils;
 
@@ -21,8 +22,8 @@ public class AuthService {
     private AppConfiguration config;
 
     @Inject
-    public AuthService(UserDAO userDAO, AppConfiguration config) {
-        this.userDAO = userDAO;
+    public AuthService(DAOFactory factory, AppConfiguration config) {
+        this.userDAO = factory.onDemand(UserDAO.class);
         this.passwordHashKey = config.getSecrets().getPasswordHash();
         this.jwtSecret = config.getSecrets().getJwtSecret();
     }

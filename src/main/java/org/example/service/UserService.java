@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.User;
+import org.example.persistence.DAOFactory;
 import org.example.persistence.UserDAO;
 import org.example.util.CryptographicUtils;
 
@@ -13,11 +14,9 @@ public class UserService {
     private final UserDAO userDAO;
 
     @Inject
-    public UserService(UserDAO userDAO){
-        this.userDAO = userDAO;
+    public UserService(DAOFactory factory) {
+        this.userDAO = factory.onDemand(UserDAO.class);
     }
-
-
 
     public List<User> getUsersByRole(String role) {
         return userDAO.getUsersByRole(role);

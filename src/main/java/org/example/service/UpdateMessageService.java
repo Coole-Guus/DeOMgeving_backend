@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.model.ExperimentDetails;
 import org.example.model.Message;
+import org.example.persistence.DAOFactory;
 import org.example.persistence.UpdateMessageDAO;
 
 import javax.inject.Inject;
@@ -13,8 +14,8 @@ public class UpdateMessageService extends BaseService<ExperimentDetails> {
     private final UpdateMessageDAO dao;
 
     @Inject
-    public UpdateMessageService(UpdateMessageDAO dao) {
-        this.dao = dao;
+    public UpdateMessageService(DAOFactory factory) {
+        this.dao = factory.onDemand(UpdateMessageDAO.class);
     }
 
     public List<Message> getAllMessages(int experimentId) {

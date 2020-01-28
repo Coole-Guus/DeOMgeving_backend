@@ -2,6 +2,7 @@ package org.example.service;
 
 import javax.inject.Inject;
 import org.example.model.Experiment;
+import org.example.persistence.DAOFactory;
 import org.example.persistence.ExperimentDAO;
 import java.util.List;
 
@@ -10,9 +11,8 @@ public class ExperimentService extends BaseService<Experiment> {
     private final ExperimentDAO dao;
 
     @Inject
-    public ExperimentService(ExperimentDAO dao) {
-        this.dao = dao;
-
+    public ExperimentService(DAOFactory factory) {
+        this.dao = factory.onDemand(ExperimentDAO.class);
     }
 
     public List<Experiment> getAll() {

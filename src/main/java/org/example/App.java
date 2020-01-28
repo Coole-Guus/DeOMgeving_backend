@@ -12,10 +12,7 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.example.auth.JWTAuthenticator;
 import org.example.auth.JWTAuthorizer;
 import org.example.model.JWTUser;
-import org.example.persistence.ExperimentDAO;
-import org.example.persistence.ExperimentDetailsDAO;
-import org.example.persistence.UpdateMessageDAO;
-import org.example.persistence.UserDAO;
+import org.example.persistence.*;
 import org.example.service.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
@@ -75,20 +72,19 @@ public class App extends Application<AppConfiguration> {
     }
 
     private void registerInjections(AppConfiguration config, Environment env) {
-        final DBIFactory factory = new DBIFactory();
-        final DBI jdbi = factory.build(env, config.getDataSourceFactory(), "postgresql");
+        final DAOFactory factory = new DAOFactory(config.getDataSourceFactory(), env);
 
         env.jersey().register(new AbstractBinder() {
 
             @Override
             protected void configure() {
-                // verplaatsen naar service laag
-                    bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
-                    bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
-                    bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
-                    bind(jdbi.onDemand(UpdateMessageDAO.class)).to(UpdateMessageDAO.class);
-                // eind verplaatsing
-
+//                // verplaatsen naar service laag
+//                    bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
+//                    bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
+//                    bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
+//                    bind(jdbi.onDemand(UpdateMessageDAO.class)).to(UpdateMessageDAO.class);
+//                // eind verplaatsing
+                bind(factory).to(DAOFactory.class);
                 bind(AuthService.class).to(AuthService.class);
                 bind(UploadService.class).to(UploadService.class);
                 bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);

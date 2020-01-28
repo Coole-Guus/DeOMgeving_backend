@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.UploadedFile;
+import org.example.persistence.DAOFactory;
 import org.example.persistence.ExperimentDetailsDAO;
 
 import javax.inject.Inject;
@@ -12,8 +13,8 @@ public class UploadService {
     private ExperimentDetailsDAO experimentDetailsDAO;
 
     @Inject
-    public UploadService(ExperimentDetailsDAO experimentDetailsDAO) {
-        this.experimentDetailsDAO = experimentDetailsDAO;
+    public UploadService(DAOFactory factory) {
+        this.experimentDetailsDAO = factory.onDemand(ExperimentDetailsDAO.class);
     }
 
     public void uploadAttachment(UploadedFile file) {

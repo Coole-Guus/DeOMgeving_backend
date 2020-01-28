@@ -5,13 +5,11 @@ import org.example.service.UserService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Singleton
 @Path("user")
 @Produces(MediaType.APPLICATION_JSON)
 @RolesAllowed({"Admin"})
