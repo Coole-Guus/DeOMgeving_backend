@@ -12,7 +12,6 @@ public class ExperimentService extends BaseService<Experiment> {
     @Inject
     public ExperimentService(ExperimentDAO dao) {
         this.dao = dao;
-
     }
 
     public List<Experiment> getAll() {
