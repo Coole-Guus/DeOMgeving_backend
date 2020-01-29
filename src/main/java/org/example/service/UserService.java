@@ -1,8 +1,8 @@
 package org.example.service;
 
 import org.example.model.User;
+import org.example.persistence.DAOFactory;
 import org.example.persistence.UserDAO;
-import org.example.util.CryptographicUtils;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
@@ -13,31 +13,38 @@ public class UserService {
     private final UserDAO userDAO;
 
     @Inject
-    public UserService(UserDAO userDAO){
-        this.userDAO = userDAO;
-    }
-
-    public void forgotPassword(String email) {
-        String password_reset_token = String.valueOf(CryptographicUtils.generateFourDigitNumber());
-        userDAO.setToken(email, password_reset_token);
+    public UserService(DAOFactory factory) {
+        this.userDAO = factory.onDemand(UserDAO.class);
     }
 
     public List<User> getUsersByRole(String role) {
-        return userDAO.getUsersByRole(role);
+        List<User> userList = userDAO.getUsersByRole(role);
+        userDAO.close();
+        return userList;
     }
 
     public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+        List<User> userList = userDAO.getAllUsers();
+        userDAO.close();
+        return userList;
     }
 
     public Response updateUser(User user) {
-        return Response.ok().entity(userDAO.updateUser(user)).build();
+        int queryResponse = userDAO.updateUser(user);
+        return updateResponse(queryResponse);
     }
 
     public Response delete(int id) {
-        if (this.userDAO.removeUser(id) == 1)
+        int queryResponse = userDAO.removeUser(id);
+        return updateResponse(queryResponse);
+    }
+
+    private Response updateResponse(int queryResponse) {
+        userDAO.close();
+        int IS_CREATED = 1;
+        if (queryResponse == IS_CREATED)
             return Response.ok().build();
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return Response.status(Response.Status.CONFLICT).build();
     }
 }

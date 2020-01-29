@@ -1,8 +1,11 @@
 package org.example.service;
 
 import javax.inject.Inject;
+
 import org.example.model.Experiment;
+import org.example.persistence.DAOFactory;
 import org.example.persistence.ExperimentDAO;
+
 import java.util.List;
 
 public class ExperimentService extends BaseService<Experiment> {
@@ -10,61 +13,65 @@ public class ExperimentService extends BaseService<Experiment> {
     private final ExperimentDAO dao;
 
     @Inject
-    public ExperimentService(ExperimentDAO dao) {
-        this.dao = dao;
+    public ExperimentService(DAOFactory factory) {
+        this.dao = factory.onDemand(ExperimentDAO.class);
     }
 
     public List<Experiment> getAll() {
         List<Experiment> experimentList = dao.getAll();
+        dao.close();
         return experimentList;
     }
 
     public Experiment find(int id) {
-        return requireResult(dao.find(id));
+        Experiment experiment = requireResult(dao.find(id));
+        dao.close();
+        return experiment;
     }
 
     public int add(Experiment experiment) {
         dao.add(experiment);
         int lastId = dao.lastInsert();
         dao.addMessage(lastId);
+        dao.close();
         return lastId;
     }
 
     public void update(int id, Experiment experiment) {
         dao.update(id, experiment);
+        dao.close();
     }
 
     public void delete(int id) {
         dao.delete(id);
+        dao.close();
     }
 
     public List<Experiment> selectBy(String operation, String attribute, String value) {
-        switch (operation){
+        List<Experiment> experimentList = null;
+        switch (operation) {
             case "order":
-                return dao.orderBy(attribute, value);
+                experimentList = dao.orderBy(attribute, value);
             case "filter":
-                if(attribute.equals("archive")) {
-                    return dao.filterArchive(value);
+                if (attribute.equals("archive")) {
+                    experimentList = dao.filterArchive(value);
                 }
-                return dao.filter(attribute, value);
+                experimentList = dao.filter(attribute, value);
             case "search":
-                return dao.filterSearch( "%" + attribute + "%");
+                experimentList = dao.filterSearch("%" + attribute + "%");
             case "vaste dienst":
-                System.out.println("attribute: " + attribute + ", value: " + value);
-                return dao.orderByDiensten(attribute, value);
-            default:
-                return null;
+                experimentList = dao.orderByDiensten(attribute, value);
         }
-    }
 
-    public int getLastID(){
-        return dao.getLastID();
+        dao.close();
+        return experimentList;
     }
 
 
     public List<Experiment> searchDienst(String term) {
         term = "%" + term + "%";
-        System.out.println(this.dao.dienstSearch(term));
-        return this.dao.dienstSearch(term);
+        List<Experiment> experimentList = this.dao.dienstSearch(term);
+        this.dao.close();
+        return experimentList;
     }
 }

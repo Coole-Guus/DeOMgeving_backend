@@ -1,27 +1,30 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * @author Stefan
  */
-public class RegisterCredentials {
+public class RegisterCredentials implements Credentials {
 
     @JsonProperty
     @NotNull
-    @Length(max = 255)
+    @Size( min = 3, max = 191)
     private String email;
 
     @NotNull
-    @Length(max = 255)
+    @Size( min = 8, max = 255)
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,255}$",
+            message = "The given password must be in range 8, 255 characters. it requires to have a symbol, number and a capital character.")
     @JsonProperty
     private String password;
 
     @NotNull
-    @Length(max = 255)
+    @Size(min = 3, max = 255 )
     private String name;
 
     public String getEmail() {

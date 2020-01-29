@@ -8,9 +8,7 @@ import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Base64;
 
-@Singleton
 @Path("upload")
 @Produces(MediaType.APPLICATION_JSON)
 public class UploadResource {
@@ -33,8 +31,6 @@ public class UploadResource {
     public Response uploadAttachment(String data,
              @PathParam("experimentId") int experimentId,
              @PathParam("name") String name) {
-
-        System.out.println("DATA LENGTH "+data.length());
 
         UploadedFile file = new UploadedFile();
         file.setExperimentId(experimentId);

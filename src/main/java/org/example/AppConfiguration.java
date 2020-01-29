@@ -3,18 +3,27 @@ package org.example;
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.db.DataSourceFactory;
-import org.example.util.Secrets;
-import org.hibernate.validator.constraints.*;
+import org.example.util.JsonWebTokenConfig;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-import java.util.HashMap;
 
 public class AppConfiguration extends Configuration {
 
     @NotNull
     @JsonProperty
-    private Secrets secrets = new Secrets();
+    private JsonWebTokenConfig jsonWebToken = new JsonWebTokenConfig();
+
+    /*  |------------------------------------------------------------|
+        |                WARNING DONT CHANGE ONCE SET                |
+        |------------------------------------------------------------|
+        |          Alert should not be changed once used!            |
+        |   this is the secret added to salt when hasing password,   |
+        |      once changed registered user cannot be logged in.     |
+        |------------------------------------------------------------|
+     */
+    private String passwordHash = "7CBFA3B36A8FB1986814E5AA1E7875226AA36C5913432C99848A71DC3233DAE6";
+
 
     @Valid
     @NotNull
@@ -29,12 +38,16 @@ public class AppConfiguration extends Configuration {
         return database;
     }
 
-    public Secrets getSecrets() {
-        return secrets;
+    public JsonWebTokenConfig getJwtConfig() {
+        return jsonWebToken;
     }
 
     public DataSourceFactory getDatabase() {
         return database;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
     }
 }
 

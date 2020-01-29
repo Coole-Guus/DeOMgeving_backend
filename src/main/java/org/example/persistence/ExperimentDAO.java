@@ -12,6 +12,7 @@ import org.skife.jdbi.v2.sqlobject.stringtemplate.UseStringTemplate3StatementLoc
 
 import javax.inject.Singleton;
 import java.util.List;
+
 @UseStringTemplate3StatementLocator
 @Singleton
 public interface ExperimentDAO {
@@ -22,9 +23,6 @@ public interface ExperimentDAO {
     public List<Experiment> getAll();
 
     //--------------------Order BY--------------------
-
-    @SqlQuery( "SELECT LAST_INSERT_ID()")
-    public int getLastID();
 
     @SqlQuery("SELECT * FROM experiment INNER JOIN experiment_details ON experiment.experiment_ID=experiment_details.experiment_ID WHERE archief_type IS NULL AND fase != 'Vaste dienst' ORDER BY <attribute> <order>;")
     @Mapper(ExperimentMapper.class)
@@ -64,17 +62,12 @@ public interface ExperimentDAO {
     //--------------------EXPERIMENTEN STATS--------------------
 
 
-
-
-
     @SqlQuery("SELECT * FROM experiment WHERE experiment_ID = :id")
     @Mapper(ExperimentMapper.class)
-    public Experiment find(@Bind("id") int id);
+    Experiment find(@Bind("id") int id);
 
     @SqlUpdate("DELETE FROM experiment WHERE experiment_ID = :id")
-    public void delete(@Bind("id")int id);
-
-    // Add an experiment
+    void delete(@Bind("id") int id);
 
     @SqlUpdate("INSERT INTO experiment (experiment_naam, wijziging_datum, fase, experiment_leider_primair, experiment_leider_secundair, status_kleur, beschrijving) " +
             "VALUES (:experiment_naam, :wijziging_datum, :fase, :experiment_leider_primair, :experiment_leider_secundair, :color, :beschrijving);")
@@ -83,20 +76,19 @@ public interface ExperimentDAO {
     @SqlUpdate("INSERT INTO message VALUES (null, :id, 'Automatisch bericht', 'Experiment aangemaakt.', null);")
     public void addMessage(@Bind("id")int id);
 
-    // -----------------
-
     @SqlUpdate("UPDATE experiment SET " +
             "experiment_naam = :experiment_naam," +
             "wijziging_datum = :wijziging_datum," +
             "fase = :fase," +
             "status_kleur=:color," +
             "experiment_leider_primair = :experiment_leider_primair, " +
-            "experiment_leider_secundair = :experiment_leider_secundair, " +
-            "beschrijving = :beschrijving " +
+            "experiment_leider_secundair = :experiment_leider_secundair " +
             "WHERE experiment_ID = :id")
     public void update(@Bind("id") int id, @BindBean Experiment updatedExperiment);
 
     //Select last insert experiment_id
     @SqlQuery("SELECT LAST_INSERT_ID();")
     int lastInsert();
+
+    void close();
 }
