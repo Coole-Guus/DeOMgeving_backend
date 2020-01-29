@@ -12,15 +12,16 @@ public class ExperimentStatsMapper implements ResultSetMapper<ExperimentStats> {
     @Override
     public ExperimentStats map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
         ExperimentStats mappedExperimetnStats = new ExperimentStats();
-        mappedExperimetnStats.setLabUitStats(resultSet.getInt("lab_uit_stats"));
-        mappedExperimetnStats.setLabInStats(resultSet.getInt("lab_in_stats"));
-        mappedExperimetnStats.setIdeeStats(resultSet.getInt("idee_stats"));
-        mappedExperimetnStats.setExperimentenStats(resultSet.getInt("experimenten_stats"));
-        mappedExperimetnStats.setVasteDienstStats(resultSet.getInt("vaste_dienst_stats"));
-        mappedExperimetnStats.setGroenStats(resultSet.getInt("groen_stats"));
-        mappedExperimetnStats.setRoodStats(resultSet.getInt("oranje_stats"));
-        mappedExperimetnStats.setOranjeStats(resultSet.getInt("rood_stats"));
-        mappedExperimetnStats.setGewijzig(resultSet.getInt("gewijzig_laatste_30_dagen_stats"));
+        mappedExperimetnStats.setTotaal(resultSet.getInt("Totaal"));
+        mappedExperimetnStats.setAantalExperimenten(resultSet.getInt("Experimenten"));
+        mappedExperimetnStats.setAantalIdee(resultSet.getInt("Idee"));
+        mappedExperimetnStats.setAantalLabIn(resultSet.getInt("Lab_in"));
+        mappedExperimetnStats.setAantalLabUit(resultSet.getInt("Lab_uit"));
+        mappedExperimetnStats.setAantalVasteDienst(resultSet.getInt("Vaste_dienst"));
+        mappedExperimetnStats.setAantalGroen(resultSet.getInt("Groen"));
+        mappedExperimetnStats.setAantalOranje(resultSet.getInt("Oranje"));
+        mappedExperimetnStats.setAantalRood(resultSet.getInt("Rood"));
+        mappedExperimetnStats.setAantalGewijzigdSinds(resultSet.getInt("Gewijzigd_Laatste_X_Dagen"));
         return mappedExperimetnStats;
     }
 }
