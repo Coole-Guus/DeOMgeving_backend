@@ -1,10 +1,6 @@
 package org.example.model;
 
-import javafx.beans.DefaultProperty;
-
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.DefaultValue;
 
 public class ExperimentDetails {
 
