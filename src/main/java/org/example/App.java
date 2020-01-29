@@ -89,6 +89,7 @@ public class App extends Application<AppConfiguration> {
                 bind(UploadService.class).to(UploadService.class);
                 bind(ExperimentDetailsService.class).to(ExperimentDetailsService.class);
                 bind(JsonWebTokenService.class).to(JsonWebTokenService.class);
+                bind(ExperimentStatsService.class).to(ExperimentStatsService.class);
                 bind(UserService.class).to(UserService.class);
                 bind(ExperimentService.class).to(ExperimentService.class);
                 bind(config).to(AppConfiguration.class);

@@ -13,10 +13,9 @@ public class ExperimentDetails {
 
     private String netwerk = "";
     private String status = "";
-    private String kosten_inovatie = "";
+    private String kosten_innovatie = "";
     private String kosten_anders = "";
     private String doorlooptijd = "";
-    private String beschrijving = "";
     private String overige_opmerkingen = "";
     private String archief_type = null;
 
@@ -45,12 +44,12 @@ public class ExperimentDetails {
         this.status = status;
     }
 
-    public String getKosten_inovatie() {
-        return kosten_inovatie;
+    public String getKosten_innovatie() {
+        return kosten_innovatie;
     }
 
-    public void setKosten_inovatie(String kosten_inovatie) {
-        this.kosten_inovatie = kosten_inovatie;
+    public void setKosten_innovatie(String kosten_innovatie) {
+        this.kosten_innovatie = kosten_innovatie;
     }
 
     public String getKosten_anders() {
@@ -69,13 +68,7 @@ public class ExperimentDetails {
         this.doorlooptijd = doorlooptijd;
     }
 
-    public String getBeschrijving() {
-        return beschrijving;
-    }
 
-    public void setBeschrijving(String beschrijving) {
-        this.beschrijving = beschrijving;
-    }
 
     public String getOverige_opmerkingen() {
         return overige_opmerkingen;
