@@ -26,7 +26,9 @@ public class ExperimentService extends BaseService<Experiment> {
 
     public int add(Experiment experiment) {
         dao.add(experiment);
-        return dao.lastInsert();
+        int lastId = dao.lastInsert();
+        dao.addMessage(lastId);
+        return lastId;
     }
 
     public void update(int id, Experiment experiment) {
@@ -58,5 +60,9 @@ public class ExperimentService extends BaseService<Experiment> {
 
 
 
-
+    public List<Experiment> searchDienst(String term) {
+        term = "%" + term + "%";
+        System.out.println(this.dao.dienstSearch(term));
+        return this.dao.dienstSearch(term);
+    }
 }

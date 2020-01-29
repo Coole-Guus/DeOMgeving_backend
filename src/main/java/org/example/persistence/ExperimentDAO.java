@@ -45,9 +45,13 @@ public interface ExperimentDAO {
     //--------------------SEARCH--------------------
 
     //Filter search bar
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE archief_type IS NULL AND experiment_naam LIKE :searchString OR experiment_leider_primair LIKE :searchString OR experiment_leider_secundair LIKE :searchString AND fase != 'Vaste dienst';")
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE fase != 'Vaste dienst' AND (experiment_naam LIKE :searchString OR experiment_leider_primair LIKE :searchString OR experiment_leider_secundair LIKE :searchString);")
     @Mapper(ExperimentMapper.class)
     List<Experiment> filterSearch(@Bind("searchString") String searchString);
+
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE fase = 'Vaste dienst' AND (experiment_naam LIKE :searchString OR experiment_leider_primair LIKE :searchString OR experiment_leider_secundair LIKE :searchString);")
+    @Mapper(ExperimentMapper.class)
+    public List<Experiment> dienstSearch(@Bind("searchString")String searchString);
 
     //--------------------VASTE DIENSTEN--------------------
 
@@ -68,9 +72,16 @@ public interface ExperimentDAO {
     @SqlUpdate("DELETE FROM experiment WHERE experiment_ID = :id")
     void delete(@Bind("id") int id);
 
+    // Add an experiment
+
     @SqlUpdate("INSERT INTO experiment (experiment_naam, wijziging_datum, fase, experiment_leider_primair, experiment_leider_secundair, status_kleur, beschrijving) " +
             "VALUES (:experiment_naam, :wijziging_datum, :fase, :experiment_leider_primair, :experiment_leider_secundair, :color, :beschrijving);")
     void add(@BindBean Experiment newExperiment);
+
+    @SqlUpdate("INSERT INTO message VALUES (null, :id, 'Automatisch bericht', 'Experiment aangemaakt.', null);")
+    public void addMessage(@Bind("id")int id);
+
+    // -----------------
 
     @SqlUpdate("UPDATE experiment SET " +
             "experiment_naam = :experiment_naam," +
