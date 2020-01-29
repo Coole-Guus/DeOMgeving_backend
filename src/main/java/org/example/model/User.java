@@ -1,14 +1,16 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.validation.OneOf;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 import java.sql.Timestamp;
 
-public class User {
+public class User implements Principal {
 
     @NotNull
     private long id;
@@ -34,8 +36,10 @@ public class User {
     private Timestamp createDate;
 
     @Length(min = 32, max = 32)
+    @JsonIgnore
     private String token;
 
+    @JsonIgnore
     private String salt;
 
     public User() {

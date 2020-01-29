@@ -1,33 +1,24 @@
 package org.example.model;
 
+import javafx.beans.DefaultProperty;
+
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.DefaultValue;
 
 public class ExperimentDetails {
+
     @NotNull
     private int experimentId;
 
-    @NotNull
-    private String netwerk;
+    private String netwerk = "";
+    private String status = "";
+    private String kosten_innovatie = "";
+    private String kosten_anders = "";
+    private String doorlooptijd = "";
+    private String overige_opmerkingen = "";
+    private String archief_type = null;
 
-    @NotNull
-    private String status;
-
-    @NotNull
-    private String kosten_inovatie;
-
-    @NotNull
-    private String kosten_anders;
-
-    @NotNull
-    private String doorlooptijd;
-
-    @NotNull
-    private String beschrijving	;
-
-    @NotNull
-    private String voortgang;
-
-    private String archief_type;
 
     public int getExperimentId() {
         return experimentId;
@@ -53,12 +44,12 @@ public class ExperimentDetails {
         this.status = status;
     }
 
-    public String getKosten_inovatie() {
-        return kosten_inovatie;
+    public String getKosten_innovatie() {
+        return kosten_innovatie;
     }
 
-    public void setKosten_inovatie(String kosten_inovatie) {
-        this.kosten_inovatie = kosten_inovatie;
+    public void setKosten_innovatie(String kosten_innovatie) {
+        this.kosten_innovatie = kosten_innovatie;
     }
 
     public String getKosten_anders() {
@@ -77,20 +68,14 @@ public class ExperimentDetails {
         this.doorlooptijd = doorlooptijd;
     }
 
-    public String getBeschrijving() {
-        return beschrijving;
+
+
+    public String getOverige_opmerkingen() {
+        return overige_opmerkingen;
     }
 
-    public void setBeschrijving(String beschrijving) {
-        this.beschrijving = beschrijving;
-    }
-
-    public String getVoortgang() {
-        return voortgang;
-    }
-
-    public void setVoortgang(String voortgang) {
-        this.voortgang = voortgang;
+    public void setOverige_opmerkingen(String overige_opmerkingen) {
+        this.overige_opmerkingen = overige_opmerkingen;
     }
 
     public String getArchief_type() {

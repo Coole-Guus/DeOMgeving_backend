@@ -1,22 +1,19 @@
 package org.example.resource;
 
-import org.example.auth.Secured;
-import org.example.model.Experiment;
 import org.example.model.User;
 import org.example.service.UserService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
-import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Singleton
 @Path("user")
 @Produces(MediaType.APPLICATION_JSON)
-@Secured
+@RolesAllowed({"Admin"})
 public class UserResource {
 
     private final UserService userService;
@@ -25,35 +22,31 @@ public class UserResource {
     public UserResource(UserService userService) {
         this.userService = userService;
     }
-
-
-    @POST
-    @Path("/forgot/{email}")
-    public Response forgotPassword(@PathParam("email") String email) {
-        this.userService.forgotPassword(email);
-        return Response.ok().build();
-    }
-
+    
     @GET
     @Path("/usersByRole/{role}")
+    @RolesAllowed({"Admin"})
     public List<User> getUsersByRole(@PathParam("role") String role) {
         return userService.getUsersByRole(role);
     }
 
     @GET
     @Path("/getAllUsers")
+    @RolesAllowed({"Admin"})
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PUT
     @Path("/")
+    @RolesAllowed({"Admin"})
     public Response updateUser(User user) {
         return userService.updateUser(user);
     }
 
     @DELETE
     @Path("/remove/{id}")
+    @RolesAllowed({"Admin"})
     public Response removeUser(@PathParam("id") int id) {
         return this.userService.delete(id);
     }

@@ -1,17 +1,20 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 
-public class LoginCredentials {
+public class LoginCredentials implements Credentials {
 
     @JsonProperty
     @NotNull
+    @Length(max = 191)
     private String email;
 
     @JsonProperty
     @NotNull
+    @Length(max = 255)
     private String password;
 
     public String getEmail() {

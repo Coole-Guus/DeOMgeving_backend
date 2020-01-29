@@ -20,11 +20,11 @@ public class Experiment implements Principal {
     private String wijziging_datum;
 
     @NotNull
-    @OneOf(value = {"Idee", "Lab in", "Lab uit"})
+    @OneOf(value = {"Idee", "Lab in", "Lab uit","n.v.t"})
     private String fase;
 
     @NotNull
-    @OneOf(value = {"Groen", "Oranje", "Rood"})
+    @OneOf(value = {"Groen", "Oranje", "Rood","Grijs"})
     private String color;
 
     @NotNull
@@ -34,6 +34,10 @@ public class Experiment implements Principal {
     @NotNull
     @Length(max=50)
     private String experiment_leider_secundair;
+
+    @NotNull
+    @Length(max=510)
+    private String beschrijving;
 
     @Override
     @JsonIgnore
@@ -100,12 +104,22 @@ public class Experiment implements Principal {
         return experiment.getExperimentId() == this.getExperimentId();
     }
 
+    public String getBeschrijving() {
+        return beschrijving;
+    }
+
+    public void setBeschrijving(String beschrijving) {
+        this.beschrijving = beschrijving;
+    }
+
     public String toString() {
         return "\nexperimentId:" + experimentId + "\n" +
                 "experiment_naam:" + experiment_naam + "\n" +
                 "wijziging_datum:" + wijziging_datum + "\n" +
                 "fase:" + fase + "\n" +
                 "color:" + color + "\n" +
-                "experiment_leider:" + experiment_leider_primair + "";
+                "experiment_leider:" + experiment_leider_primair + "\n" +
+                "beschrijving:" + beschrijving + "";
     }
+
 }
