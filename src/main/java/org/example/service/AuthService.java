@@ -87,7 +87,6 @@ public class AuthService {
         oldJWT = oldJWT.replace("Bearer ", "");
 
         if (!jwtService.isValidWithLeeway(oldJWT)) {
-            System.out.println("called");
             return Response.status(Response.Status.CONFLICT).build();
         }
 

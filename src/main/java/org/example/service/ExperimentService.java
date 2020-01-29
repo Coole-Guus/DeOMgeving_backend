@@ -52,15 +52,20 @@ public class ExperimentService extends BaseService<Experiment> {
         switch (operation) {
             case "order":
                 experimentList = dao.orderBy(attribute, value);
+                break;
             case "filter":
                 if (attribute.equals("archive")) {
                     experimentList = dao.filterArchive(value);
+                } else {
+                    experimentList = dao.filter(attribute, value);
                 }
-                experimentList = dao.filter(attribute, value);
+                break;
             case "search":
                 experimentList = dao.filterSearch("%" + attribute + "%");
+                break;
             case "vaste dienst":
                 experimentList = dao.orderByDiensten(attribute, value);
+                break;
         }
 
         dao.close();

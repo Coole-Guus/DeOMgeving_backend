@@ -82,7 +82,7 @@ public interface ExperimentDAO {
             "fase = :fase," +
             "status_kleur=:color," +
             "experiment_leider_primair = :experiment_leider_primair, " +
-            "experiment_leider_secundair = :experiment_leider_secundair " +
+            "experiment_leider_secundair = :experiment_leider_secundair, " +
             "beschrijving = :beschrijving " +
             "WHERE experiment_ID = :id")
     public void update(@Bind("id") int id, @BindBean Experiment updatedExperiment);
