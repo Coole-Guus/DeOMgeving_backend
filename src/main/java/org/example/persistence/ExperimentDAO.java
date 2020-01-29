@@ -51,7 +51,7 @@ public interface ExperimentDAO {
 
     //--------------------VASTE DIENSTEN--------------------
 
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur FROM experiment WHERE fase = 'Vaste dienst' ORDER BY <attribute> <order>;")
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE fase = 'Vaste dienst' ORDER BY <attribute> <order>;")
     @Mapper(ExperimentMapper.class)
     public List<Experiment> orderByDiensten(@Define("attribute") String attribute, @Define("order") String order);
 
