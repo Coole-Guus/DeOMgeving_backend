@@ -38,9 +38,7 @@ public class AuthResource {
     @POST
     @Path("refresh")
     public Response refreshToken(@Context HttpHeaders headers) {
-        service.refreshToken(headers);
-
-        return Response.ok().build();
+        return service.refreshToken(headers);
     }
 
     @POST

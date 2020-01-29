@@ -51,24 +51,19 @@ public interface ExperimentDAO {
 
     //--------------------VASTE DIENSTEN--------------------
 
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur FROM experiment WHERE fase = 'Vaste dienst' ORDER BY <attribute> <order>;")
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE fase = 'Vaste dienst' ORDER BY <attribute> <order>;")
     @Mapper(ExperimentMapper.class)
     public List<Experiment> orderByDiensten(@Define("attribute") String attribute, @Define("order") String order);
 
     //--------------------EXPERIMENTEN STATS--------------------
 
 
-
-
-
     @SqlQuery("SELECT * FROM experiment WHERE experiment_ID = :id")
     @Mapper(ExperimentMapper.class)
-    public Experiment find(@Bind("id") int id);
+    Experiment find(@Bind("id") int id);
 
     @SqlUpdate("DELETE FROM experiment WHERE experiment_ID = :id")
-    public void delete(@Bind("id")int id);
-
-    // Add an experiment
+    void delete(@Bind("id") int id);
 
     @SqlUpdate("INSERT INTO experiment (experiment_naam, wijziging_datum, fase, experiment_leider_primair, experiment_leider_secundair, status_kleur, beschrijving) " +
             "VALUES (:experiment_naam, :wijziging_datum, :fase, :experiment_leider_primair, :experiment_leider_secundair, :color, :beschrijving);")
@@ -76,8 +71,6 @@ public interface ExperimentDAO {
 
     @SqlUpdate("INSERT INTO message VALUES (null, :id, 'Automatisch bericht', 'Experiment aangemaakt.', null);")
     public void addMessage(@Bind("id")int id);
-
-    // -----------------
 
     @SqlUpdate("UPDATE experiment SET " +
             "experiment_naam = :experiment_naam," +

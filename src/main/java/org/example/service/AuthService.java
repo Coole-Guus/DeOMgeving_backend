@@ -1,5 +1,6 @@
 package org.example.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.example.AppConfiguration;
 import org.example.model.Credentials;
 import org.example.model.LoginCredentials;
@@ -12,7 +13,6 @@ import org.example.util.CryptographicUtils;
 import javax.inject.Inject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
@@ -83,19 +83,22 @@ public class AuthService {
     }
 
 
-    public void refreshToken(HttpHeaders headers) {
-        String JWT = headers.getRequestHeader("Authorization").get(0);
-        JWT = JWT.replace("Bearer ", "");
+    public Response refreshToken(HttpHeaders headers) {
+        System.out.println();
+        if (!jwtService.hasJWTHeader(headers)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
 
-        String jwt = jwtService.createExpireJWT();
-        System.out.println(jwt);
+        String oldJWT = headers.getRequestHeader("Authorization").get(0);
+        oldJWT = oldJWT.replace("Bearer ", "");
 
-        System.out.println(jwtService.isValid(JWT));
-        System.out.println(jwtService.decodeJwt(JWT));
+        if(!jwtService.isValid(oldJWT, 60 * 10)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
 
-        System.out.println(JWT);
+        String newJWT = jwtService.createJWTFromInvalidJWT(oldJWT);
 
+        return JWTResponse(newJWT);
     }
-
 
 }
