@@ -82,4 +82,12 @@ public class ExperimentResource {
     public List<Experiment> getExperimentSearch(@PathParam("term") String term) {
         return service.selectBy("search", term, "");
     }
+
+    @GET
+    @Path("searchDienst/{term}")
+    public List<Experiment> getExperimentSearchDiesnt(@PathParam("term") String term) {
+        return service.searchDienst(term);
+    }
+
+
 }
