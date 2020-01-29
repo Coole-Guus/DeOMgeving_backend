@@ -60,5 +60,9 @@ public class ExperimentService extends BaseService<Experiment> {
     }
 
 
-
+    public List<Experiment> searchDienst(String term) {
+        term = "%" + term + "%";
+        System.out.println(this.dao.dienstSearch(term));
+        return this.dao.dienstSearch(term);
+    }
 }
