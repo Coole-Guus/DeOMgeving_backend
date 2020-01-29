@@ -47,13 +47,17 @@ public interface ExperimentDAO {
     //--------------------SEARCH--------------------
 
     //Filter search bar
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE archief_type IS NULL AND experiment_naam LIKE :searchString OR experiment_leider_primair LIKE :searchString OR experiment_leider_secundair LIKE :searchString AND fase != 'Vaste dienst';")
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE fase != 'Vaste dienst' AND (experiment_naam LIKE :searchString OR experiment_leider_primair LIKE :searchString OR experiment_leider_secundair LIKE :searchString);")
     @Mapper(ExperimentMapper.class)
     public List<Experiment> filterSearch(@Bind("searchString")String searchString);
 
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase, wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE fase = 'Vaste dienst' AND (experiment_naam LIKE :searchString OR experiment_leider_primair LIKE :searchString OR experiment_leider_secundair LIKE :searchString);")
+    @Mapper(ExperimentMapper.class)
+    public List<Experiment> dienstSearch(@Bind("searchString")String searchString);
+
     //--------------------VASTE DIENSTEN--------------------
 
-    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur FROM experiment WHERE fase = 'Vaste dienst' ORDER BY <attribute> <order>;")
+    @SqlQuery("SELECT experiment_naam, experiment_leider_primair, experiment_leider_secundair, fase ,wijziging_datum, experiment_ID, status_kleur, beschrijving FROM experiment WHERE fase = 'Vaste dienst' ORDER BY <attribute> <order>;")
     @Mapper(ExperimentMapper.class)
     public List<Experiment> orderByDiensten(@Define("attribute") String attribute, @Define("order") String order);
 
