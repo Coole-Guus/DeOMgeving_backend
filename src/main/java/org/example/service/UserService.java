@@ -3,7 +3,6 @@ package org.example.service;
 import org.example.model.User;
 import org.example.persistence.DAOFactory;
 import org.example.persistence.UserDAO;
-import org.example.util.CryptographicUtils;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;

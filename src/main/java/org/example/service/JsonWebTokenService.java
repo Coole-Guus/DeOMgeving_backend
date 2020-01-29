@@ -16,20 +16,21 @@ import java.util.List;
 
 public class JsonWebTokenService {
     private String jwtSecret;
+    private JWTVerifier verifier;
+    private JWTVerifier verifierWithLeeway;
     private Algorithm algorithm;
 
     @Inject
     public JsonWebTokenService(AppConfiguration config) {
         this.jwtSecret = config.getSecrets().getJwtSecret();
         this.algorithm = Algorithm.HMAC256(jwtSecret);
+        this.verifier = JWT.require(algorithm).withIssuer("De_omgeving").build();
+
+        int leeway = config.getSecrets().getJwtRefreshLeeway();
+        this.verifierWithLeeway = JWT.require(algorithm).withIssuer("De_omgeving").acceptLeeway(leeway).build();
     }
 
     public boolean isValid(String token) {
-        return this.isValid(token, 0);
-    }
-
-    public boolean isValid(String token, int leeway) {
-        JWTVerifier verifier = this.getVerifier(leeway);
         try {
             verifier.verify(token);
             return true;
@@ -38,21 +39,30 @@ public class JsonWebTokenService {
         }
     }
 
-    public DecodedJWT decodeJwt(String token) {
-        return this.decodeJwt(token, 0);
+    public boolean isValidWithLeeway(String token) {
+        try {
+            verifierWithLeeway.verify(token);
+            return true;
+        } catch (JWTVerificationException exception) {
+            return false;
+        }
     }
-    public DecodedJWT decodeJwt(String token, int leeway) {
-        JWTVerifier verifier = this.getVerifier(leeway);
+
+    public DecodedJWT decodeJwt(String token) {
         return verifier.verify(token);
     }
 
-    private JWTVerifier getVerifier(int leeway){
+    public DecodedJWT decodeJwtWithLeeway(String token) {
+        return verifierWithLeeway.verify(token);
+    }
+
+    private JWTVerifier getVerifier(int leeway) {
         return JWT.require(algorithm).withIssuer("De_omgeving")
                 .acceptLeeway(leeway).build();
     }
 
     public String createJWTFromInvalidJWT(String JWTString) {
-        DecodedJWT decodedJWT = decodeJwt(JWTString, 10 * 60);
+        DecodedJWT decodedJWT = decodeJwtWithLeeway(JWTString);
         Date expireDate = createExpireDate(15);
         return JWT.create()
                 .withIssuer(decodedJWT.getIssuer())
@@ -83,4 +93,5 @@ public class JsonWebTokenService {
 
         return true;
     }
+
 }

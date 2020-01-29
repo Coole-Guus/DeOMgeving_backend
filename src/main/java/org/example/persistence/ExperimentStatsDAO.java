@@ -32,6 +32,5 @@ public interface ExperimentStatsDAO {
     @Mapper(ExperimentMapper.class)
     public List<Experiment> getVasteDiensten(@Bind("date") String date);
 
-
-
+    void close();
 }

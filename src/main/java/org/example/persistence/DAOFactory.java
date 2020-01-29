@@ -8,28 +8,16 @@ import org.skife.jdbi.v2.DBI;
 
 public class DAOFactory {
 
-    private final DataSourceFactory dataSource;
-    private final DBIFactory factory;
-    private final Environment env;
-    private final String driverName;
     private final DBI jdbi;
 
     public DAOFactory(DataSourceFactory dataSource, Environment env) {
-        this.dataSource = dataSource;
-        this.factory = new DBIFactory();
-        this.driverName = "postgresql";
-        this.env = env;
         final DBIFactory factory = new DBIFactory();
-        this.jdbi = factory.build(env, this.dataSource, "postgresql");
+        this.jdbi = factory.build(env, dataSource, "postgresql");
     }
 
     public <T> T onDemand(Class<T> dao) {
 
         return jdbi.onDemand(dao);
-    }
-
-    public void closeDAO(Object dao) {
-        jdbi.close(dao);
     }
 
 }

@@ -17,7 +17,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Singleton
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/")
 public class AuthResource {

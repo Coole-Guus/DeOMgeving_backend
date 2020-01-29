@@ -24,7 +24,6 @@ public class AuthService {
     private final String passwordHashKey;
     private final String jwtSecret;
     private UserDAO userDAO;
-    private AppConfiguration config;
 
     @Inject
     public AuthService(DAOFactory factory, AppConfiguration config, JsonWebTokenService jwtService) {
@@ -84,7 +83,6 @@ public class AuthService {
 
 
     public Response refreshToken(HttpHeaders headers) {
-        System.out.println();
         if (!jwtService.hasJWTHeader(headers)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -92,7 +90,7 @@ public class AuthService {
         String oldJWT = headers.getRequestHeader("Authorization").get(0);
         oldJWT = oldJWT.replace("Bearer ", "");
 
-        if(!jwtService.isValid(oldJWT, 60 * 10)) {
+        if (!jwtService.isValidWithLeeway(oldJWT)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 

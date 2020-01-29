@@ -51,7 +51,6 @@ public class ExperimentService extends BaseService<Experiment> {
             case "search":
                 return dao.filterSearch( "%" + attribute + "%");
             case "vaste dienst":
-                System.out.println("attribute: " + attribute + ", value: " + value);
                 return dao.orderByDiensten(attribute, value);
             default:
                 return null;

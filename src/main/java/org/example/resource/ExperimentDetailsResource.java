@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Singleton
 @Path("/experimentDetails")
 @Produces(MediaType.APPLICATION_JSON)
 public class ExperimentDetailsResource {

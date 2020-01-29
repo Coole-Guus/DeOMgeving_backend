@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.model.Experiment;
 import org.example.model.ExperimentStats;
+import org.example.persistence.DAOFactory;
 import org.example.persistence.ExperimentStatsDAO;
 
 import javax.inject.Inject;
@@ -14,8 +15,8 @@ public class ExperimentStatsService extends BaseService<Experiment> {
     private final ExperimentStatsDAO experimentStatsDAO;
 
     @Inject
-    public ExperimentStatsService( ExperimentStatsDAO experimentStatsDAO){
-        this.experimentStatsDAO = experimentStatsDAO;
+    public ExperimentStatsService( DAOFactory factory){
+        this.experimentStatsDAO = factory.onDemand(ExperimentStatsDAO.class);
     }
 
     public ExperimentStats getStats(String date){
@@ -23,6 +24,7 @@ public class ExperimentStatsService extends BaseService<Experiment> {
         List<Experiment> experiments = experimentStatsDAO.getExperimenten(date);
         experimentStats.setGewijzigdeExperimenten(experiments);
         experimentStats.setGewijzigdeDiensten(experimentStatsDAO.getVasteDiensten(date));
+        experimentStatsDAO.close();
         return experimentStats;
     }
 }

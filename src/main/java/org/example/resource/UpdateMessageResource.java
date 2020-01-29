@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * @author Leander
  */
-@Singleton
 @Path("/messages")
 @Produces(MediaType.APPLICATION_JSON)
 public class UpdateMessageResource {

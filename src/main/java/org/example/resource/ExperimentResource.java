@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * @author Stefan, Bart, Leander
  */
-@Singleton
 @Path("/experimenten")
 @Produces(MediaType.APPLICATION_JSON)
 public class ExperimentResource {
