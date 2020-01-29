@@ -13,7 +13,6 @@ import org.skife.jdbi.v2.sqlobject.stringtemplate.UseStringTemplate3StatementLoc
 import javax.inject.Singleton;
 
 @UseStringTemplate3StatementLocator
-@Singleton
 public interface ExperimentDetailsDAO {
 
     @SqlUpdate("UPDATE experiment_details SET attachment = :fileData, attachmentName = :fileName WHERE experiment_ID = :experimentId")

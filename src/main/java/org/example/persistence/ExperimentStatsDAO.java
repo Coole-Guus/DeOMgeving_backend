@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 
 @UseStringTemplate3StatementLocator
-@Singleton
 
 public interface ExperimentStatsDAO {
 

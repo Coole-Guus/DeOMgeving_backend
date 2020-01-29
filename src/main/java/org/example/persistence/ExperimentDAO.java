@@ -14,7 +14,6 @@ import javax.inject.Singleton;
 import java.util.List;
 
 @UseStringTemplate3StatementLocator
-@Singleton
 public interface ExperimentDAO {
 
 
