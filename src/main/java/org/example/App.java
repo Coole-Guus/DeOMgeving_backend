@@ -4,7 +4,6 @@ import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.db.DataSourceFactory;
-import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -12,11 +11,10 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.example.auth.JWTAuthenticator;
 import org.example.auth.JWTAuthorizer;
 import org.example.model.JWTUser;
-import org.example.persistence.*;
+import org.example.persistence.DAOFactory;
 import org.example.service.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
-import org.skife.jdbi.v2.DBI;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -78,12 +76,6 @@ public class App extends Application<AppConfiguration> {
 
             @Override
             protected void configure() {
-//                // verplaatsen naar service laag
-//                    bind(jdbi.onDemand(UserDAO.class)).to(UserDAO.class);
-//                    bind(jdbi.onDemand(ExperimentDAO.class)).to(ExperimentDAO.class);
-//                    bind(jdbi.onDemand(ExperimentDetailsDAO.class)).to(ExperimentDetailsDAO.class);
-//                    bind(jdbi.onDemand(UpdateMessageDAO.class)).to(UpdateMessageDAO.class);
-//                // eind verplaatsing
                 bind(factory).to(DAOFactory.class);
                 bind(AuthService.class).to(AuthService.class);
                 bind(UploadService.class).to(UploadService.class);
@@ -91,6 +83,7 @@ public class App extends Application<AppConfiguration> {
                 bind(JsonWebTokenService.class).to(JsonWebTokenService.class);
                 bind(UserService.class).to(UserService.class);
                 bind(ExperimentService.class).to(ExperimentService.class);
+                bind(JsonWebTokenService.class).to(JsonWebTokenService.class);
                 bind(config).to(AppConfiguration.class);
                 bind(UpdateMessageService.class).to(UpdateMessageService.class);
 
