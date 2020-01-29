@@ -2,10 +2,10 @@ jsonWebToken:
   issuer: DeOMgeving
 
   # time in seconds
-  expireDate: 5
+  expireDate: 900
 
   # tijd om te refreshen nadat een jwt is verlopen.
-  jwtRefreshLeeway: 10
+  jwtRefreshLeeway: 600
 
   # jwt secret
   secret: "2989D9914C496A9271E6945A703C5DF6366E5063AD1B2691DE144599C2930B9E"
