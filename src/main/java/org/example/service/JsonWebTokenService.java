@@ -5,8 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.interfaces.Verification;
 import org.example.AppConfiguration;
+import org.example.model.User;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.HttpHeaders;
@@ -15,24 +15,28 @@ import java.util.Date;
 import java.util.List;
 
 public class JsonWebTokenService {
-    private String jwtSecret;
-    private JWTVerifier verifier;
-    private JWTVerifier verifierWithLeeway;
-    private Algorithm algorithm;
+    private final String ISSUER;
+    private final Algorithm ALGORITHM;
+    private final int EXPIRE_TIME_IN_SECONDS;
+    private final JWTVerifier VERIFIER;
+    private final JWTVerifier VERIFIER_WITH_LEEWAY;
+
 
     @Inject
     public JsonWebTokenService(AppConfiguration config) {
-        this.jwtSecret = config.getSecrets().getJwtSecret();
-        this.algorithm = Algorithm.HMAC256(jwtSecret);
-        this.verifier = JWT.require(algorithm).withIssuer("De_omgeving").build();
+        String SECRET = config.getJwtConfig().getSecret();
+        this.ISSUER = config.getJwtConfig().getIssuer();
+        this.ALGORITHM = Algorithm.HMAC256(SECRET);
+        this.VERIFIER = JWT.require(ALGORITHM).withIssuer(ISSUER).build();
+        this.EXPIRE_TIME_IN_SECONDS = config.getJwtConfig().getExpireDate();
 
-        int leeway = config.getSecrets().getJwtRefreshLeeway();
-        this.verifierWithLeeway = JWT.require(algorithm).withIssuer("De_omgeving").acceptLeeway(leeway).build();
+        int leeway = config.getJwtConfig().getJwtRefreshLeeway();
+        this.VERIFIER_WITH_LEEWAY = JWT.require(ALGORITHM).withIssuer(ISSUER).acceptLeeway(leeway).build();
     }
 
     public boolean isValid(String token) {
         try {
-            verifier.verify(token);
+            VERIFIER.verify(token);
             return true;
         } catch (JWTVerificationException exception) {
             return false;
@@ -41,7 +45,7 @@ public class JsonWebTokenService {
 
     public boolean isValidWithLeeway(String token) {
         try {
-            verifierWithLeeway.verify(token);
+            VERIFIER_WITH_LEEWAY.verify(token);
             return true;
         } catch (JWTVerificationException exception) {
             return false;
@@ -49,33 +53,39 @@ public class JsonWebTokenService {
     }
 
     public DecodedJWT decodeJwt(String token) {
-        return verifier.verify(token);
+        return VERIFIER.verify(token);
     }
 
     public DecodedJWT decodeJwtWithLeeway(String token) {
-        return verifierWithLeeway.verify(token);
+        return VERIFIER_WITH_LEEWAY.verify(token);
     }
 
-    private JWTVerifier getVerifier(int leeway) {
-        return JWT.require(algorithm).withIssuer("De_omgeving")
-                .acceptLeeway(leeway).build();
+
+    public String createJwt(User user) {
+        Date expireDate = createExpireDate(this.EXPIRE_TIME_IN_SECONDS);
+        return JWT.create()
+                .withIssuer(ISSUER)
+                .withIssuedAt(new Date())
+                .withClaim("name", user.getName())
+                .withClaim("role", user.getRole())
+                .withExpiresAt(expireDate)
+                .sign(ALGORITHM);
     }
 
     public String createJWTFromInvalidJWT(String JWTString) {
         DecodedJWT decodedJWT = decodeJwtWithLeeway(JWTString);
-        Date expireDate = createExpireDate(15);
+        Date expireDate = createExpireDate(this.EXPIRE_TIME_IN_SECONDS);
         return JWT.create()
-                .withIssuer(decodedJWT.getIssuer())
-                .withIssuedAt(decodedJWT.getIssuedAt())
+                .withIssuer(ISSUER)
+                .withIssuedAt(new Date())
                 .withClaim("name", decodedJWT.getClaim("name").asString())
                 .withClaim("role", decodedJWT.getClaim("role").asString())
                 .withExpiresAt(expireDate)
-                .sign(algorithm);
+                .sign(ALGORITHM);
     }
 
-    private static Date createExpireDate(int minutes) {
-        long MINUTES_TO_SECONDS = 60 * minutes;
-        Instant instant = Instant.now().plusSeconds(MINUTES_TO_SECONDS);
+    private static Date createExpireDate(int seconds) {
+        Instant instant = Instant.now().plusSeconds(seconds);
         return Date.from(instant);
     }
 

@@ -1,6 +1,5 @@
 package org.example.service;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
 import org.example.AppConfiguration;
 import org.example.model.Credentials;
 import org.example.model.LoginCredentials;
@@ -13,7 +12,6 @@ import org.example.util.CryptographicUtils;
 import javax.inject.Inject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -22,15 +20,13 @@ public class AuthService {
     private JsonWebTokenService jwtService;
 
     private final String passwordHashKey;
-    private final String jwtSecret;
     private UserDAO userDAO;
 
     @Inject
     public AuthService(DAOFactory factory, AppConfiguration config, JsonWebTokenService jwtService) {
         this.jwtService = jwtService;
         this.userDAO = factory.onDemand(UserDAO.class);
-        this.passwordHashKey = config.getSecrets().getPasswordHash();
-        this.jwtSecret = config.getSecrets().getJwtSecret();
+        this.passwordHashKey = config.getPasswordHash();
     }
 
     public Response createUser(RegisterCredentials credentials) {
@@ -61,7 +57,7 @@ public class AuthService {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        String token = CryptographicUtils.buildJWTToken(user, jwtSecret);
+        String token = jwtService.createJwt(user);
         userDAO.close();
         return JWTResponse(token);
     }
@@ -91,7 +87,8 @@ public class AuthService {
         oldJWT = oldJWT.replace("Bearer ", "");
 
         if (!jwtService.isValidWithLeeway(oldJWT)) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+            System.out.println("called");
+            return Response.status(Response.Status.CONFLICT).build();
         }
 
         String newJWT = jwtService.createJWTFromInvalidJWT(oldJWT);

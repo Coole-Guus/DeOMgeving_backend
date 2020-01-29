@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -34,7 +35,7 @@ public class AuthResource {
         return service.onLogin(loginCredentials);
     }
 
-    @POST
+    @GET
     @Path("refresh")
     public Response refreshToken(@Context HttpHeaders headers) {
         return service.refreshToken(headers);

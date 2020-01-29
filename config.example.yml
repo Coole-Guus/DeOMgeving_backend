@@ -1,3 +1,17 @@
+jsonWebToken:
+  issuer: DeOMgeving
+
+  # time in minutes
+  expireDate: 900
+
+  # tijd om te refreshen nadat een jwt is verlopen.
+  jwtRefreshLeeway: 600
+
+  # jwt secret
+  secret: "De_omgeving"
+
+
+
 secrets:
   passwordHash: '7CBFA3B36A8FB1986814E5AA1E7875226AA36C5913432C99848A71DC3233DAE6'
   jwtSecret: '2989D9914C496A9271E6945A703C5DF6366E5063AD1B2691DE144599C2930B9E'
