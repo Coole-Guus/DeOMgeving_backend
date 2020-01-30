@@ -25,7 +25,7 @@ public class UserResource {
     
     @GET
     @Path("/usersByRole/{role}")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"Admin", "Medewerker", "Gebruiker"})
     public List<User> getUsersByRole(@PathParam("role") String role) {
         return userService.getUsersByRole(role);
     }
